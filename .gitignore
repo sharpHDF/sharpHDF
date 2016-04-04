@@ -1,0 +1,5 @@
+src/CSharpHDF5/bin/
+src/CSharpHDF5/obj/
+src/CSharpHDF5/packages/
+src/CSharpHDF5Tests/bin/
+src/CSharpHDF5Tests/obj/

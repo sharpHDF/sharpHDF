@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpHDF5", "CSharpHDF5.csproj", "{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpHDF5Tests", "..\CSharpHDF5Tests\CSharpHDF5Tests.csproj", "{5193CC07-C056-4766-91B9-7714C24DE5E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5193CC07-C056-4766-91B9-7714C24DE5E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5193CC07-C056-4766-91B9-7714C24DE5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5193CC07-C056-4766-91B9-7714C24DE5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5193CC07-C056-4766-91B9-7714C24DE5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
