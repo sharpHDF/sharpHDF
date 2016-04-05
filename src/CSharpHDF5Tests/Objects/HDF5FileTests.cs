@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using CSharpHDF5.Helpers;
 using CSharpHDF5.Objects;
 using NUnit.Framework;
 
@@ -32,7 +32,6 @@ namespace CSharpHDF5Tests.Objects
 
             file = new Hdf5File(fileName);
             file.Close();
-
         }
 
         [Test]
@@ -55,6 +54,16 @@ namespace CSharpHDF5Tests.Objects
             Hdf5File file = new Hdf5File(fileName);
 
             List<Hdf5Attribute> attributes = file.Attributes;
+
+            file.Close();
+        }
+
+        [Test]
+        public void GetObjectsBelow()
+        {
+            string fileName = @"c:\temp\test.h5";
+
+            Hdf5File file = new Hdf5File(fileName);
 
             file.Close();
         }

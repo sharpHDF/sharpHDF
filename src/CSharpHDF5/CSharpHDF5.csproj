@@ -45,11 +45,15 @@
   <ItemGroup>
     <Compile Include="Helpers\AttributeHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
-    <Compile Include="Interfaces\IAttributeManagement.cs" />
-    <Compile Include="Interfaces\IGroupManagement.cs" />
+    <Compile Include="Interfaces\IHasAttributes.cs" />
+    <Compile Include="Interfaces\IHasDatasets.cs" />
+    <Compile Include="Interfaces\IHasGroups.cs" />
+    <Compile Include="Objects\AbstractHdf5Object.cs" />
     <Compile Include="Objects\Hdf5Attribute.cs" />
+    <Compile Include="Objects\Hdf5Dataset.cs" />
     <Compile Include="Objects\HDF5File.cs" />
     <Compile Include="Objects\HDF5Group.cs" />
+    <Compile Include="Objects\HDF5Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
