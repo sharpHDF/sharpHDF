@@ -50,5 +50,10 @@ namespace CSharpHDF5.Objects
                 Close();
             }            
         }
+
+        public Hdf5Group NewGroup(string _name)
+        {
+            return null;
+        }
     }
 }

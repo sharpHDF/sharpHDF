@@ -31,5 +31,19 @@ namespace CSharpHDF5.Helpers
 
             return dataset;
         }
+
+        public static Array GetData(Hdf5Dataset _dataset)
+        {
+            var id = H5O.open(_dataset.FileId.Value, _dataset.Path.FullPath);
+
+            if (id > 0)
+            {
+                Array a;
+
+                H5O.close(id);
+            }
+
+            return null;
+        }
     }
 }

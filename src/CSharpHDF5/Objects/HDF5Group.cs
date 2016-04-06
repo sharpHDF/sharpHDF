@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using CSharpHDF5.Enums;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
@@ -45,6 +46,16 @@ namespace CSharpHDF5.Objects
         internal void LoadChildObjects()
         {
             GroupHelper.PopulateChildrenObjects(m_FileId, this);
+        }
+
+        public Hdf5Group NewGroup(string _name)
+        {
+            return null;
+        }
+
+        public Hdf5Dataset NewDataset(string _name, Hdf5DataTypes _datatype, int _dimensions)
+        {
+            return null;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace CSharpHDF5.Objects
 
                 for (int i = 0; i < parts.Length - 1; i++)
                 {
-                    sb.Append(parts[0]);
+                    sb.Append(parts[i]);
                     sb.Append("/");
                 }
 

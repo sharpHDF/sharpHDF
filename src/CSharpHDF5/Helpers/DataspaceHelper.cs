@@ -19,9 +19,21 @@ namespace CSharpHDF5.Helpers
             ulong[] maxDims = new ulong[rank];
             H5S.get_simple_extent_dims(dataspaceId.Value, dims, maxDims);
 
-            Hdf5Dataspace dataspace = new Hdf5Dataspace();
-            dataspace.Id = dataspaceId;
-            dataspace.NumberOfDimensions = rank;
+            Hdf5Dataspace dataspace = new Hdf5Dataspace
+            {
+                Id = dataspaceId,
+                NumberOfDimensions = rank
+            };
+
+            for (int i = 0; i < dims.Length; i++)
+            {
+                Hdf5DimensionProperty property = new Hdf5DimensionProperty
+                {
+                    CurrentSize = dims[i],
+                    MaximumSize = maxDims[i]
+                };
+                dataspace.DimensionProperties.Add(property);
+            }
 
             H5S.close(dataspaceId.Value);
 

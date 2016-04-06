@@ -1,4 +1,6 @@
-﻿using CSharpHDF5.Structs;
+﻿using System;
+using CSharpHDF5.Helpers;
+using CSharpHDF5.Structs;
 
 namespace CSharpHDF5.Objects
 {
@@ -20,6 +22,12 @@ namespace CSharpHDF5.Objects
 
             Path = new Hdf5Path(_path);
             Name = Path.Name;
-        }         
+        }
+
+
+        public Array GetData()
+        {
+            return DatasetHelper.GetData(this);
+        }
     }
 }
