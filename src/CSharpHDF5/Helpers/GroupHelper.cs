@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Objects;
-using CSharpHDF5.Struct;
+using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
@@ -39,46 +39,6 @@ namespace CSharpHDF5.Helpers
 
             return count;
         }
-
-        //public static List<Hdf5Group> GetGroupsBelowObject(int _identifier)
-        //{
-        //    ulong pos = 0;
-        //    int id = 0;
-        //    bool done = false;
-
-        //    List<Hdf5Group> groups = new List<Hdf5Group>();
-        //    List<Hdf5Dataset> datasets = new List<Hdf5Dataset>();
-
-        //    var rootId = H5G.open(_identifier, "/");
-
-        //    H5O.visit(_identifier, H5.index_t.NAME, H5.iter_order_t.INC, 
-        //        delegate(int _objectId, IntPtr _namePtr, ref H5O.info_t _info, IntPtr _opData)
-        //    {
-        //        string objectName = Marshal.PtrToStringAnsi(_namePtr);
-        //        H5O.info_t gInfo = new H5O.info_t();
-        //        H5O.get_info_by_name(_objectId, objectName, ref gInfo);
-
-        //        int oid = H5O.open(_objectId, objectName);
-        //        H5O.close(oid);
-
-        //        if (gInfo.type == H5O.type_t.DATASET)
-        //        {
-        //            Hdf5Dataset dataset = new Hdf5Dataset(_objectId, objectName);
-        //            datasets.Add(dataset);
-        //        }
-        //        else if (gInfo.type == H5O.type_t.GROUP)
-        //        {
-        //            Hdf5Group group = new Hdf5Group(_objectId, objectName);
-        //            groups.Add(group);
-        //        }
-
-        //        return 0;
-        //    }, new IntPtr());
-
-        //    H5G.close(rootId);
-
-        //    return groups;
-        //}
 
         public static void PopulateChildrenObjects<T>(Hdf5Identifier _fileId, T _parentObject)  where T : AbstractHdf5Object
         {
@@ -146,21 +106,21 @@ namespace CSharpHDF5.Helpers
 
             var id = H5O.open(_fileId.Value, fullPath).ToId();
             if (id.Value > 0)
-            {
-                H5O.close(id.Value);
-
+            {                
                 if (gInfo.type == H5O.type_t.DATASET)
                 {
-                    Hdf5Dataset dataset = new Hdf5Dataset(id, fullPath);
-                    return dataset;
+                    return DatasetHelper.LoadDataset(_fileId, id, fullPath);
                 }
 
                 if (gInfo.type == H5O.type_t.GROUP)
                 {
                     Hdf5Group group = new Hdf5Group(_fileId, id, fullPath);
+                    group.FileId = _fileId;
                     group.LoadChildObjects();
                     return group;
                 }
+
+                H5O.close(id.Value);
             }
 
             return null;

@@ -1,5 +1,5 @@
 ﻿using System;
-using CSharpHDF5.Struct;
+using CSharpHDF5.Structs;
 
 namespace CSharpHDF5.Helpers
 {

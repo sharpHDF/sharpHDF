@@ -2,7 +2,7 @@
 using System.Text;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
-using CSharpHDF5.Struct;
+using CSharpHDF5.Structs;
 
 namespace CSharpHDF5.Objects
 {

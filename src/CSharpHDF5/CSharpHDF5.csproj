@@ -43,20 +43,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Hdf5ByteOrder.cs" />
+    <Compile Include="Enums\Hdf5DataTypes.cs" />
     <Compile Include="Helpers\AttributeHelper.cs" />
+    <Compile Include="Helpers\DatasetHelper.cs" />
+    <Compile Include="Helpers\DataspaceHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\IdHelper.cs" />
+    <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="Interfaces\IHasAttributes.cs" />
     <Compile Include="Interfaces\IHasDatasets.cs" />
     <Compile Include="Interfaces\IHasGroups.cs" />
     <Compile Include="Objects\AbstractHdf5Object.cs" />
     <Compile Include="Objects\Hdf5Attribute.cs" />
     <Compile Include="Objects\Hdf5Dataset.cs" />
+    <Compile Include="Structs\Hdf5Dataspace.cs" />
+    <Compile Include="Structs\Hdf5DataType.cs" />
     <Compile Include="Objects\HDF5File.cs" />
     <Compile Include="Objects\HDF5Group.cs" />
     <Compile Include="Objects\HDF5Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Struct\Id.cs" />
+    <Compile Include="Structs\Hdf5Identifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

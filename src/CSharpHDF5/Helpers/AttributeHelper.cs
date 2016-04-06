@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Objects;
-using CSharpHDF5.Struct;
+using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSharpHDF5.Struct
+namespace CSharpHDF5.Structs
 {
     public struct Hdf5Identifier
     {

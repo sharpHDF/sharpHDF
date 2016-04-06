@@ -1,9 +1,14 @@
-﻿using CSharpHDF5.Struct;
+﻿using CSharpHDF5.Structs;
 
 namespace CSharpHDF5.Objects
 {
     public class Hdf5Dataset : AbstractHdf5Object
     {
+        public string Name { get; set; }
+
+        public Hdf5DataType Type { get; set; }
+
+        public Hdf5Dataspace Dataspace { get; set; }
 
         public Hdf5Dataset()
         {
@@ -14,6 +19,7 @@ namespace CSharpHDF5.Objects
             Id = _id;
 
             Path = new Hdf5Path(_path);
-        }
+            Name = Path.Name;
+        }         
     }
 }
