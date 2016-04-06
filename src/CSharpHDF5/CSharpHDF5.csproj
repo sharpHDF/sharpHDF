@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AttributeHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
+    <Compile Include="Helpers\IdHelper.cs" />
     <Compile Include="Interfaces\IHasAttributes.cs" />
     <Compile Include="Interfaces\IHasDatasets.cs" />
     <Compile Include="Interfaces\IHasGroups.cs" />
@@ -55,10 +56,12 @@
     <Compile Include="Objects\HDF5Group.cs" />
     <Compile Include="Objects\HDF5Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Struct\Id.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

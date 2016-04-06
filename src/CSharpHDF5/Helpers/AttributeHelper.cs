@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Objects;
+using CSharpHDF5.Struct;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
@@ -15,20 +16,16 @@ namespace CSharpHDF5.Helpers
 
             List<Hdf5Attribute> attributes = new List<Hdf5Attribute>();
 
-            int id = H5A.iterate(_object.Id, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref n,
+            int id = H5A.iterate(_object.Id.Value, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref n,
                 delegate(int _id, IntPtr _namePtr, ref H5A.info_t _ainfo, IntPtr _data)
                 {
                     string attributeName = Marshal.PtrToStringAnsi(_namePtr);
-                    string attributeValue = null;
-
-                    ReadStringAttribute(_object.Id, attributeName, out attributeValue);
-
-                    Hdf5Attribute attribute = new Hdf5Attribute
+                   
+                    Hdf5Attribute attribute = GetStringAttribute(_object.Id, attributeName);
+                    if (attribute != null)
                     {
-                        Name = attributeName,
-                        Value = attributeValue
-                    };
-                    attributes.Add(attribute);
+                        attributes.Add(attribute);
+                    }
 
                     return 0;
                 }, new IntPtr());
@@ -36,16 +33,14 @@ namespace CSharpHDF5.Helpers
             return attributes;
         }
 
-        public static bool ReadStringAttribute(int _objectId, string _title, out string _value)
+        public static Hdf5Attribute GetStringAttribute(Hdf5Identifier _objectId, string _title)
         {
-            _value = "";
-
             int attributeId = 0;
             int typeId = 0;
 
             try
             {
-                attributeId = H5A.open(_objectId, _title);
+                attributeId = H5A.open(_objectId.Value, _title);
                 typeId = H5A.get_type(attributeId);
                 var sizeData = H5T.get_size(typeId);
                 var size = sizeData.ToInt32();
@@ -57,13 +52,21 @@ namespace CSharpHDF5.Helpers
                 pinnedArray.Free();
                 H5T.close(aTypeMem);
 
-                _value = System.Text.Encoding.ASCII.GetString(strBuffer, 0, strBuffer.Length - 1);
+                string value = System.Text.Encoding.ASCII.GetString(strBuffer, 0, strBuffer.Length - 1);
 
-                return true;
+                var attribute = new Hdf5Attribute
+                {
+                    Id = attributeId.ToId(),
+                    Name = _title,
+                    Value = value
+                };
+
+                return attribute;
             }
             catch (Exception ex)
             {
-                return false;
+                //TODO - Log
+                return null;
             }
             finally
             {

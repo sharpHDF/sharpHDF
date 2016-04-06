@@ -13,11 +13,11 @@ namespace CSharpHDF5.Objects
         {
             if (File.Exists(_filename))
             {
-                Id = H5F.open(_filename, H5F.ACC_RDWR);
+                Id = H5F.open(_filename, H5F.ACC_RDWR).ToId();
             }
             else
             {
-                Id = H5F.create(_filename, H5F.ACC_TRUNC);
+                Id = H5F.create(_filename, H5F.ACC_TRUNC).ToId();
             }
 
             Path = new Hdf5Path(".");
@@ -32,8 +32,8 @@ namespace CSharpHDF5.Objects
         /// </summary>
         public void Close()
         {
-            H5F.close(Id);
-            Id = 0;
+            H5F.close(Id.Value);
+            Id = 0.ToId();
         }
 
         public List<Hdf5Group> Groups { get; set; }
@@ -45,7 +45,7 @@ namespace CSharpHDF5.Objects
 
         public void Dispose()
         {
-            if (Id != 0)
+            if (Id.Value != 0)
             {
                 Close();
             }            

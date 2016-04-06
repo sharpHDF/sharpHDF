@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Objects;
+using CSharpHDF5.Struct;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
@@ -79,21 +80,21 @@ namespace CSharpHDF5.Helpers
         //    return groups;
         //}
 
-        public static void PopulateChildrenObjects<T>(int _fileId, T _parentObject)  where T : AbstractHdf5Object
+        public static void PopulateChildrenObjects<T>(Hdf5Identifier _fileId, T _parentObject)  where T : AbstractHdf5Object
         {
             ulong pos = 0;
 
             List<string> groupNames = new List<string>();
 
-            int id = H5G.open(_fileId, _parentObject.Path.FullPath);
+            var id = H5G.open(_fileId.Value, _parentObject.Path.FullPath).ToId();
 
-            if (id > 0)
+            if (id.Value > 0)
             {
                 ArrayList al = new ArrayList();
                 GCHandle hnd = GCHandle.Alloc(al);
                 IntPtr op_data = (IntPtr) hnd;
 
-                H5L.iterate(_parentObject.Id, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref pos,
+                H5L.iterate(_parentObject.Id.Value, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref pos,
                     delegate(int _objectId, IntPtr _namePtr, ref H5L.info_t _info, IntPtr _data)
                     {
                         string objectName = Marshal.PtrToStringAnsi(_namePtr);
@@ -105,7 +106,7 @@ namespace CSharpHDF5.Helpers
 
                 hnd.Free();
 
-                H5G.close(id);
+                H5G.close(id.Value);
 
                 foreach (var groupName in groupNames)
                 {
@@ -136,17 +137,17 @@ namespace CSharpHDF5.Helpers
             }
         }
 
-        public static object GetObject(int _fileId, AbstractHdf5Object _parent, string _objectName)
+        public static object GetObject(Hdf5Identifier _fileId, AbstractHdf5Object _parent, string _objectName)
         {
             string fullPath = _parent.Path.Combine(_objectName);
 
             H5O.info_t gInfo = new H5O.info_t();
-            H5O.get_info_by_name(_fileId, fullPath, ref gInfo);
+            H5O.get_info_by_name(_fileId.Value, fullPath, ref gInfo);
 
-            int id = H5O.open(_fileId, fullPath);
-            if (id > 0)
+            var id = H5O.open(_fileId.Value, fullPath).ToId();
+            if (id.Value > 0)
             {
-                H5O.close(id);
+                H5O.close(id.Value);
 
                 if (gInfo.type == H5O.type_t.DATASET)
                 {

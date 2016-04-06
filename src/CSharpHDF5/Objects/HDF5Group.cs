@@ -2,12 +2,13 @@
 using System.Text;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
+using CSharpHDF5.Struct;
 
 namespace CSharpHDF5.Objects
 {
     public class Hdf5Group : AbstractHdf5Object, IHasGroups, IHasAttributes, IHasDatasets
     {
-        private int m_FileId;
+        private Hdf5Identifier m_FileId;
 
         public Hdf5Group()
         {
@@ -15,7 +16,10 @@ namespace CSharpHDF5.Objects
             Datasets = new List<Hdf5Dataset>();
         }
 
-        internal Hdf5Group(int _fileId, int _groupId, string _path)
+        internal Hdf5Group(
+            Hdf5Identifier _fileId, 
+            Hdf5Identifier _groupId, 
+            string _path)
         {
             m_FileId = _fileId;
             Id = _groupId;

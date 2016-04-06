@@ -1,4 +1,6 @@
-﻿namespace CSharpHDF5.Objects
+﻿using CSharpHDF5.Struct;
+
+namespace CSharpHDF5.Objects
 {
     public class Hdf5Dataset : AbstractHdf5Object
     {
@@ -7,7 +9,7 @@
         {
         }
 
-        internal Hdf5Dataset(int _id, string _path)
+        internal Hdf5Dataset(Hdf5Identifier _id, string _path)
         {
             Id = _id;
 
