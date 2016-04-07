@@ -16,6 +16,7 @@ namespace CSharpHDF5.Helpers
         public static Hdf5DataType GetDataType(Hdf5Identifier _objectId)
         {
             var typeId = H5D.get_type(_objectId.Value).ToId();
+            var typeNative = H5T.get_native_type(typeId.Value, H5T.direction_t.DEFAULT).ToId();           
             var typeClass = H5T.get_class(typeId.Value);
             var typeSize = (int) H5T.get_size(typeId.Value);
 
@@ -43,38 +44,46 @@ namespace CSharpHDF5.Helpers
                 {
                     if (typeSize == 1)
                     {
-                        dt.Type= Hdf5DataTypes.Int8;                        
+                        dt.Type = Hdf5DataTypes.UInt8;
+                        dt.NativeType = H5T.NATIVE_UINT8.ToId();
                     }
                     else if (typeSize == 2)
                     {
-                        dt.Type = Hdf5DataTypes.Int16;  
+                        dt.Type = Hdf5DataTypes.UInt16;
+                        dt.NativeType = H5T.NATIVE_UINT16.ToId();
                     }
                     else if (typeSize == 4)
                     {
-                        dt.Type = Hdf5DataTypes.Int32;  
+                        dt.Type = Hdf5DataTypes.UInt32;
+                        dt.NativeType = H5T.NATIVE_UINT32.ToId();
                     }
                     else if (typeSize == 8)
                     {
-                        dt.Type = Hdf5DataTypes.Int64;  
+                        dt.Type = Hdf5DataTypes.UInt64;
+                        dt.NativeType = H5T.NATIVE_UINT64.ToId();
                     }
                 }
                 else
                 {
                     if (typeSize == 1)
                     {
-                        dt.Type = Hdf5DataTypes.UInt8;
+                        dt.Type = Hdf5DataTypes.Int8;
+                        dt.NativeType = H5T.NATIVE_INT8.ToId();
                     }
                     else if (typeSize == 2)
                     {
-                        dt.Type = Hdf5DataTypes.UInt16;
+                        dt.Type = Hdf5DataTypes.Int16;
+                        dt.NativeType = H5T.NATIVE_INT16.ToId();
                     }
                     else if (typeSize == 4)
                     {
-                        dt.Type = Hdf5DataTypes.UInt32;
+                        dt.Type = Hdf5DataTypes.Int32;
+                        dt.NativeType = H5T.NATIVE_INT32.ToId();
                     }
                     else if (typeSize == 8)
                     {
-                        dt.Type = Hdf5DataTypes.UInt64;
+                        dt.Type = Hdf5DataTypes.Int64;
+                        dt.NativeType = H5T.NATIVE_INT64.ToId();
                     }
                 }
             }
