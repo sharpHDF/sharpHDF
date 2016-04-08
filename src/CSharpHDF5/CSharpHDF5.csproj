@@ -58,7 +58,7 @@
     <Compile Include="Objects\AbstractHdf5Object.cs" />
     <Compile Include="Objects\Hdf5Attribute.cs" />
     <Compile Include="Objects\Hdf5Dataset.cs" />
-    <Compile Include="Structs\Hdf5DimensionProperty.cs" />
+    <Compile Include="Objects\Hdf5DimensionProperty.cs" />
     <Compile Include="Objects\Hdf5Dataspace.cs" />
     <Compile Include="Structs\Hdf5DataType.cs" />
     <Compile Include="Objects\HDF5File.cs" />
