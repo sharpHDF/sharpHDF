@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Enums;
 using CSharpHDF5.Objects;
@@ -239,9 +240,49 @@ namespace CSharpHDF5.Helpers
             return dataArray;
         }
 
-        public static Hdf5Dataset CreateDataset()
+        public static Hdf5Dataset CreateDataset(
+            Hdf5Identifier _fileId, 
+            Hdf5Path _parentPath, 
+            string _name, 
+            Hdf5DataTypes _datatype, 
+            int _numberOfDimensions, 
+            List<Hdf5DimensionProperty> _properties)
         {
+            Hdf5Path path = _parentPath.Append(_name);
+
+            ulong[] dimensionSize = new ulong[_numberOfDimensions];
+            ulong[] maxSize = new ulong[_numberOfDimensions];
+
+            int i = 0;
+            foreach (var property in _properties)
+            {
+                dimensionSize[i] = property.CurrentSize;
+                maxSize[i] = property.MaximumSize;
+
+                i++;
+            }
+
+            Hdf5Identifier dataspaceId = H5S.create_simple(_numberOfDimensions, dimensionSize, maxSize).ToId();
             
+            Hdf5Identifier typeId = H5T.copy(TypeHelper.GetNativeType(_datatype).Value).ToId();
+            var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
+
+            Hdf5Identifier datasetId = H5D.create(_fileId.Value, path.FullPath, typeId.Value, dataspaceId.Value).ToId();
+
+            Hdf5Dataset dataset = null;
+
+            if (datasetId.Value > 0)
+            {
+                dataset = new Hdf5Dataset(datasetId, path.FullPath)
+                {
+                    Type = TypeHelper.GetDataType(datasetId),
+                    Dataspace = DataspaceHelper.GetDataspace(datasetId)
+                };
+            }            
+
+            H5D.close(datasetId.Value);
+
+            return dataset;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CSharpHDF5.Enums;
+﻿using System;
+using CSharpHDF5.Enums;
 using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
@@ -104,6 +105,35 @@ namespace CSharpHDF5.Helpers
             H5T.close(typeId.Value);
 
             return dt;
+        }
+
+        public static Hdf5Identifier GetNativeType(Hdf5DataTypes _datatype)
+        {
+            switch (_datatype)
+            {
+                case Hdf5DataTypes.UInt8:
+                    return H5T.NATIVE_UINT8.ToId();
+                case Hdf5DataTypes.UInt16:
+                    return H5T.NATIVE_UINT16.ToId();
+                case Hdf5DataTypes.UInt32:
+                    return H5T.NATIVE_UINT32.ToId();
+                case Hdf5DataTypes.UInt64:
+                    return H5T.NATIVE_UINT64.ToId();
+                case Hdf5DataTypes.Int8:
+                    return H5T.NATIVE_INT8.ToId();
+                case Hdf5DataTypes.Int16:
+                    return H5T.NATIVE_INT16.ToId();
+                case Hdf5DataTypes.Int32:
+                    return H5T.NATIVE_INT32.ToId();
+                case Hdf5DataTypes.Int64:
+                    return H5T.NATIVE_INT64.ToId();
+                case Hdf5DataTypes.Single:
+                    return H5T.NATIVE_FLOAT.ToId();
+                case Hdf5DataTypes.Double:
+                    return H5T.NATIVE_DOUBLE.ToId();
+            }
+
+            throw new ArgumentOutOfRangeException("_datatype", "Unknown type");
         }
     }
 }

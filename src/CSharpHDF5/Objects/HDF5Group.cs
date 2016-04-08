@@ -51,17 +51,30 @@ namespace CSharpHDF5.Objects
         public Hdf5Group AddGroup(string _name)
         {
             Hdf5Group group = GroupHelper.CreateGroup(m_FileId, Path, _name);
-            Groups.Add(group);
+
+            if (group != null)
+            {
+                Groups.Add(group);
+            }
             return group;
         }
 
         public Hdf5Dataset AddDataset(
             string _name, 
             Hdf5DataTypes _datatype, 
-            int _dimensions,
-            int _maxSize = 1)
+            int _numberOfDimensions,
+            List<Hdf5DimensionProperty> _dimensionProperties)
         {
-            return null;
+            Hdf5Dataset dataset = DatasetHelper.CreateDataset(
+                m_FileId, Path, _name, _datatype, 
+                _numberOfDimensions,_dimensionProperties);
+
+            if (dataset != null)
+            {
+                Datasets.Add(dataset);
+            }
+
+            return dataset;
         }
     }
 }

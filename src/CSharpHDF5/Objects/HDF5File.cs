@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CSharpHDF5.Enums;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
+using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Objects
@@ -55,8 +57,30 @@ namespace CSharpHDF5.Objects
         public Hdf5Group AddGroup(string _name)
         {
             Hdf5Group group = GroupHelper.CreateGroup(Id, Path, _name);
-            Groups.Add(group);
+
+            if (group != null)
+            {
+                Groups.Add(group);
+            }
             return group;
+        }
+
+        public Hdf5Dataset AddDataset(
+            string _name,
+            Hdf5DataTypes _datatype,
+            int _numberOfDimensions,
+            List<Hdf5DimensionProperty> _dimensionProperties)
+        {
+            Hdf5Dataset dataset = DatasetHelper.CreateDataset(
+                Id, Path, _name, _datatype,
+                _numberOfDimensions, _dimensionProperties);
+
+            if (dataset != null)
+            {
+                Datasets.Add(dataset);
+            }
+
+            return dataset;
         }
     }
 }
