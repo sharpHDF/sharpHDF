@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Objects;
@@ -125,5 +126,24 @@ namespace CSharpHDF5.Helpers
 
             return null;
         }
+
+        public static Hdf5Group CreateGroup(Hdf5Identifier _fileId, Hdf5Path _parentPath, string _name)
+        {
+            Hdf5Path path = _parentPath.Append(_name);
+
+            int id = H5G.create(_fileId.Value, path.FullPath);
+
+            if (id > 0)
+            {
+                Hdf5Group group = new Hdf5Group(_fileId, id.ToId(), path.FullPath);
+
+                H5G.close(id);
+
+                return group;
+            }
+
+            return null;
+        }
+
     }
 }

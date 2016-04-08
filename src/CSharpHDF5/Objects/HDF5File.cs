@@ -37,6 +37,7 @@ namespace CSharpHDF5.Objects
         }
 
         public List<Hdf5Group> Groups { get; set; }
+        public List<Hdf5Dataset> Datasets { get; set; } 
 
         public List<Hdf5Attribute> Attributes
         {
@@ -51,9 +52,11 @@ namespace CSharpHDF5.Objects
             }            
         }
 
-        public Hdf5Group NewGroup(string _name)
+        public Hdf5Group AddGroup(string _name)
         {
-            return null;
+            Hdf5Group group = GroupHelper.CreateGroup(Id, Path, _name);
+            Groups.Add(group);
+            return group;
         }
     }
 }

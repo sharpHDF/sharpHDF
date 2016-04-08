@@ -50,6 +50,7 @@
     <Compile Include="Helpers\DataspaceHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\IdHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="Interfaces\IHasAttributes.cs" />
     <Compile Include="Interfaces\IHasDatasets.cs" />

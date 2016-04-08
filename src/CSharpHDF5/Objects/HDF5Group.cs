@@ -48,12 +48,18 @@ namespace CSharpHDF5.Objects
             GroupHelper.PopulateChildrenObjects(m_FileId, this);
         }
 
-        public Hdf5Group NewGroup(string _name)
+        public Hdf5Group AddGroup(string _name)
         {
-            return null;
+            Hdf5Group group = GroupHelper.CreateGroup(m_FileId, Path, _name);
+            Groups.Add(group);
+            return group;
         }
 
-        public Hdf5Dataset NewDataset(string _name, Hdf5DataTypes _datatype, int _dimensions)
+        public Hdf5Dataset AddDataset(
+            string _name, 
+            Hdf5DataTypes _datatype, 
+            int _dimensions,
+            int _maxSize = 1)
         {
             return null;
         }

@@ -238,6 +238,11 @@ namespace CSharpHDF5.Helpers
 
             return dataArray;
         }
+
+        public static Hdf5Dataset CreateDataset()
+        {
+            
+        }
     }
 }
 
