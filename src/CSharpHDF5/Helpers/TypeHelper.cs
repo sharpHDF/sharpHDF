@@ -87,6 +87,19 @@ namespace CSharpHDF5.Helpers
                     }
                 }
             }
+            else if (typeClass == H5T.class_t.FLOAT)
+            {
+                if (typeSize == 4)
+                {
+                    dt.Type = Hdf5DataTypes.Single;
+                    dt.NativeType = H5T.NATIVE_FLOAT.ToId();
+                }
+                else if (typeSize == 8)
+                {
+                    dt.Type = Hdf5DataTypes.Double;
+                    dt.NativeType = H5T.NATIVE_DOUBLE.ToId();
+                }
+            }
 
             H5T.close(typeId.Value);
 
