@@ -1,5 +1,9 @@
 version: 1.0.{build}
 
+environment:
+  nugetKey:
+    secure: CRRgxp0YT0nwHJ2juNykbOeJVs88vQYh3tmA0gITjcfFOa3PMJ4W0DC8vTjLXHeQ
+    
 before_build:
   - nuget restore src/CSharpHDF5/CSharpHDF5.sln
 
@@ -27,3 +31,12 @@ build:
   verbosity: Minimal 
   publish_nuget: true
   
+deploy:
+  provider: NuGet
+  api_key:  nugetKey
+  skip_symbols: true
+  artifact: /.*\.nupkg/  
+  on:
+    branch: master
+    platform: x64
+    appveyor_repo_tag: true
