@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using CSharpHDF5.Objects;
+﻿using CSharpHDF5.Objects;
 
 namespace CSharpHDF5.Interfaces
 {
     public interface IHasGroups
     {
-        List<Hdf5Group> Groups { get; }
+        ReadonlyList<Hdf5Group> Groups { get; }
+
+        Hdf5Group AddGroup(string _name);
     }
 }

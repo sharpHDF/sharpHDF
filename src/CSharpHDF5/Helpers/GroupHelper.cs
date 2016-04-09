@@ -10,7 +10,7 @@ using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
 {
-    public static class GroupHelper
+    internal static class GroupHelper
     {
         public static int GetCount(int _identifier)
         {
@@ -125,6 +125,18 @@ namespace CSharpHDF5.Helpers
             }
 
             return null;
+        }
+
+        public static Hdf5Group CreateGroupAddToList(ReadonlyList<Hdf5Group> _groups, Hdf5Identifier _fileId,
+            Hdf5Path _parentPath, string _name)
+        {
+            Hdf5Group group = CreateGroup(_fileId, _parentPath, _name);
+
+            if (group != null)
+            {
+                _groups.Add(group);
+            }
+            return group;
         }
 
         public static Hdf5Group CreateGroup(Hdf5Identifier _fileId, Hdf5Path _parentPath, string _name)

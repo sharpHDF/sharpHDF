@@ -5,7 +5,7 @@ using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
 {
-    public static class TypeHelper
+    internal static class TypeHelper
     {
 
         /// <summary>

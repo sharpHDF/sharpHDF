@@ -4,13 +4,16 @@ using System.IO;
 using CSharpHDF5.Enums;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
-using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Objects
 {
-    public class Hdf5File : AbstractHdf5Object, IDisposable, IHasGroups, IHasAttributes
+    public class Hdf5File : AbstractHdf5Object, IDisposable, IHasGroups, IHasDatasets, IHasAttributes
     {
+        /// <summary>
+        /// Opens an existing file and loads up the group and dataset headers in the object.
+        /// </summary>
+        /// <param name="_filename"></param>
         public Hdf5File(string _filename)
         {
             if (File.Exists(_filename))
@@ -24,7 +27,8 @@ namespace CSharpHDF5.Objects
 
             Path = new Hdf5Path(".");
 
-            Groups = new List<Hdf5Group>();
+            Groups = new ReadonlyList<Hdf5Group>();
+            Datasets = new ReadonlyList<Hdf5Dataset>();
 
             GroupHelper.PopulateChildrenObjects(Id, this);
         }
@@ -38,14 +42,37 @@ namespace CSharpHDF5.Objects
             Id = 0.ToId();
         }
 
-        public List<Hdf5Group> Groups { get; set; }
-        public List<Hdf5Dataset> Datasets { get; set; } 
+        private ReadonlyList<Hdf5Attribute> m_Attributes = null; 
 
-        public List<Hdf5Attribute> Attributes
+        /// <summary>
+        /// List of attributes that are attached to this object
+        /// </summary>
+        public ReadonlyList<Hdf5Attribute> Attributes
         {
-            get { return AttributeHelper.GetAttributes(this); }
+            get
+            {
+                if (m_Attributes == null)
+                {
+                    m_Attributes = AttributeHelper.GetAttributes(this);                    
+                }
+
+                return m_Attributes;
+            }
         }
 
+        /// <summary>
+        /// List of the groups that are contained at the top level of the file
+        /// </summary>
+        public ReadonlyList<Hdf5Group> Groups { get; internal set; }
+
+        /// <summary>
+        /// List of the datasets that are contained at the top level of the file
+        /// </summary>
+        public ReadonlyList<Hdf5Dataset> Datasets { get; internal set; } 
+
+        /// <summary>
+        /// Disposes of object references in the file
+        /// </summary>
         public void Dispose()
         {
             if (Id.Value != 0)
@@ -54,33 +81,38 @@ namespace CSharpHDF5.Objects
             }            
         }
 
+        /// <summary>
+        /// Adds a group to the root level of the file.
+        /// </summary>
+        /// <param name="_name"></param>
+        /// <returns></returns>
         public Hdf5Group AddGroup(string _name)
         {
-            Hdf5Group group = GroupHelper.CreateGroup(Id, Path, _name);
-
-            if (group != null)
-            {
-                Groups.Add(group);
-            }
-            return group;
+            return GroupHelper.CreateGroupAddToList(Groups, Id, Path, _name);
         }
 
+        /// <summary>
+        /// Adds a dataset to the root level of the file.
+        /// </summary>
+        /// <param name="_name"></param>
+        /// <param name="_datatype"></param>
+        /// <param name="_numberOfDimensions"></param>
+        /// <param name="_dimensionProperties"></param>
+        /// <returns></returns>
         public Hdf5Dataset AddDataset(
             string _name,
             Hdf5DataTypes _datatype,
             int _numberOfDimensions,
             List<Hdf5DimensionProperty> _dimensionProperties)
         {
-            Hdf5Dataset dataset = DatasetHelper.CreateDataset(
-                Id, Path, _name, _datatype,
-                _numberOfDimensions, _dimensionProperties);
-
-            if (dataset != null)
-            {
-                Datasets.Add(dataset);
-            }
-
-            return dataset;
+            return DatasetHelper.CreateDatasetAddToDatasets(
+                Datasets, 
+                Id, 
+                Path, 
+                _name, 
+                _datatype, 
+                _numberOfDimensions,
+                _dimensionProperties);
         }
     }
 }

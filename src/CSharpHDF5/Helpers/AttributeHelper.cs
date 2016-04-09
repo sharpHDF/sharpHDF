@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Objects;
 using CSharpHDF5.Structs;
@@ -7,14 +6,14 @@ using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
 {
-    public static class AttributeHelper
+    internal static class AttributeHelper
     {
-        public static List<Hdf5Attribute> GetAttributes(
+        public static ReadonlyList<Hdf5Attribute> GetAttributes(
             AbstractHdf5Object _object)
         {
             ulong n = 0;
 
-            List<Hdf5Attribute> attributes = new List<Hdf5Attribute>();
+            ReadonlyList<Hdf5Attribute> attributes = new ReadonlyList<Hdf5Attribute>();
 
             int id = H5A.iterate(_object.Id.Value, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref n,
                 delegate(int _id, IntPtr _namePtr, ref H5A.info_t _ainfo, IntPtr _data)

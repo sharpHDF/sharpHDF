@@ -13,8 +13,8 @@ namespace CSharpHDF5.Objects
 
         public Hdf5Group()
         {
-            Groups = new List<Hdf5Group>();
-            Datasets = new List<Hdf5Dataset>();
+            Groups = new ReadonlyList<Hdf5Group>();
+            Datasets = new ReadonlyList<Hdf5Dataset>();
         }
 
         internal Hdf5Group(
@@ -28,17 +28,17 @@ namespace CSharpHDF5.Objects
             Path = new Hdf5Path(_path);
             Name = Path.Name;
 
-            Groups = new List<Hdf5Group>();                       
-            Datasets = new List<Hdf5Dataset>();
+            Groups = new ReadonlyList<Hdf5Group>();                      
+            Datasets = new ReadonlyList<Hdf5Dataset>();
         }
 
         public string Name { get; set; }
 
-        public List<Hdf5Group> Groups { get; set; }
+        public ReadonlyList<Hdf5Group> Groups { get; set; }
 
-        public List<Hdf5Dataset> Datasets { get; set; } 
+        public ReadonlyList<Hdf5Dataset> Datasets { get; set; } 
 
-        public List<Hdf5Attribute> Attributes
+        public ReadonlyList<Hdf5Attribute> Attributes
         {
             get { return AttributeHelper.GetAttributes(this); }
         }
@@ -48,33 +48,38 @@ namespace CSharpHDF5.Objects
             GroupHelper.PopulateChildrenObjects(m_FileId, this);
         }
 
+        /// <summary>
+        /// Adds a group to the root level of the file.
+        /// </summary>
+        /// <param name="_name"></param>
+        /// <returns></returns>
         public Hdf5Group AddGroup(string _name)
         {
-            Hdf5Group group = GroupHelper.CreateGroup(m_FileId, Path, _name);
-
-            if (group != null)
-            {
-                Groups.Add(group);
-            }
-            return group;
+            return GroupHelper.CreateGroupAddToList(Groups, Id, Path, _name);
         }
 
+        /// <summary>
+        /// Adds a dataset to the root level of the file.
+        /// </summary>
+        /// <param name="_name"></param>
+        /// <param name="_datatype"></param>
+        /// <param name="_numberOfDimensions"></param>
+        /// <param name="_dimensionProperties"></param>
+        /// <returns></returns>
         public Hdf5Dataset AddDataset(
-            string _name, 
-            Hdf5DataTypes _datatype, 
+            string _name,
+            Hdf5DataTypes _datatype,
             int _numberOfDimensions,
             List<Hdf5DimensionProperty> _dimensionProperties)
         {
-            Hdf5Dataset dataset = DatasetHelper.CreateDataset(
-                m_FileId, Path, _name, _datatype, 
-                _numberOfDimensions,_dimensionProperties);
-
-            if (dataset != null)
-            {
-                Datasets.Add(dataset);
-            }
-
-            return dataset;
+            return DatasetHelper.CreateDatasetAddToDatasets(
+                Datasets,
+                Id,
+                Path,
+                _name,
+                _datatype,
+                _numberOfDimensions,
+                _dimensionProperties);
         }
     }
 }

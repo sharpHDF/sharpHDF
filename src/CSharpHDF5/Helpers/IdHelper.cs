@@ -3,7 +3,7 @@ using CSharpHDF5.Structs;
 
 namespace CSharpHDF5.Helpers
 {
-    public static class IdHelper
+    internal static class IdHelper
     {
 #if HDF5_VER1_10
         public static Hdf5Identifier ToId(this Int64 _value)

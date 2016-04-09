@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using CSharpHDF5.Helpers;
+﻿using System.IO;
 using CSharpHDF5.Objects;
 using NUnit.Framework;
 
@@ -41,7 +39,7 @@ namespace CSharpHDF5Tests.Objects
 
             Hdf5File file = new Hdf5File(fileName);
 
-            List<Hdf5Group> groups = file.Groups;
+            ReadonlyList<Hdf5Group> groups = file.Groups;
 
             file.Close();
         }
@@ -53,7 +51,7 @@ namespace CSharpHDF5Tests.Objects
 
             Hdf5File file = new Hdf5File(fileName);
 
-            List<Hdf5Attribute> attributes = file.Attributes;
+            ReadonlyList<Hdf5Attribute> attributes = file.Attributes;
 
             file.Close();
         }

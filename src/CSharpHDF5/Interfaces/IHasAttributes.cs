@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using CSharpHDF5.Objects;
+﻿using CSharpHDF5.Objects;
 
 namespace CSharpHDF5.Interfaces
 {
     interface IHasAttributes
     {
-        List<Hdf5Attribute> Attributes { get; }
+        ReadonlyList<Hdf5Attribute> Attributes { get; }
     }
 }

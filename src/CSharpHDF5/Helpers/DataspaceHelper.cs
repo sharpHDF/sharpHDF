@@ -4,7 +4,7 @@ using HDF.PInvoke;
 
 namespace CSharpHDF5.Helpers
 {
-    public static class DataspaceHelper
+    internal static class DataspaceHelper
     {
         /// <summary>
         /// 
