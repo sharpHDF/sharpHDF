@@ -33,6 +33,11 @@ namespace CSharpHDF5.Objects
                     sb.Append("/");
                 }
 
+                if (sb.Length > 2)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                }
+
                 ParentPath = sb.ToString();
             }
         }

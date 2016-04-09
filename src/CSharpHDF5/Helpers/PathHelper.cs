@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using CSharpHDF5.Objects;
 
 namespace CSharpHDF5.Helpers
@@ -7,11 +7,24 @@ namespace CSharpHDF5.Helpers
     {
         public static Hdf5Path Append(this Hdf5Path _path, string _childName)
         {
-            string temp = Path.Combine(_path.FullPath, _childName);
+            if (_childName == null)
+            {
+                throw new ArgumentNullException("_childName");
+            }
 
-            Hdf5Path path = new Hdf5Path(temp);
+            if (_path != null)
+            {
+                string fullPath = _path.FullPath;
 
-            return path;
+                if (fullPath.EndsWith("/"))
+                {
+                    return new Hdf5Path(fullPath + _childName);
+                }
+
+                return new Hdf5Path(fullPath + "/" + _childName);
+            }
+            
+            return new Hdf5Path(_childName);
         }
     }
 }

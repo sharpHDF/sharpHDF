@@ -55,7 +55,7 @@ namespace CSharpHDF5.Objects
         /// <returns></returns>
         public Hdf5Group AddGroup(string _name)
         {
-            return GroupHelper.CreateGroupAddToList(Groups, Id, Path, _name);
+            return GroupHelper.CreateGroupAddToList(Groups, m_FileId, Path, _name);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace CSharpHDF5.Objects
         {
             return DatasetHelper.CreateDatasetAddToDatasets(
                 Datasets,
-                Id,
+                m_FileId,
                 Path,
                 _name,
                 _datatype,

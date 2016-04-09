@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using CSharpHDF5.Enums;
+using CSharpHDF5.Exceptions;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
@@ -19,7 +20,7 @@ namespace CSharpHDF5.Objects
         {
             if (!File.Exists(_filename))
             {
-                throw new FileNotFoundException("Check file path, or use static Hdf5File.CreateFile to create new one.");
+                throw new Hdf5FileNotFoundException();
             }
 
             Id = H5F.open(_filename, H5F.ACC_RDWR).ToId();
@@ -35,7 +36,7 @@ namespace CSharpHDF5.Objects
             }
             else
             {
-                throw new Exception("Unknown exception opening file");
+                throw new Hdf5UnknownException();
             }
         }
 
@@ -43,13 +44,18 @@ namespace CSharpHDF5.Objects
         {
             if (File.Exists(_filename))
             {
-                throw new Exception("File already exists.");
+                throw new Hdf5FileExistsException();
             }
 
-            Hdf5Identifier fileId = H5F.create(_filename, H5F.ACC_CREAT).ToId();
-            H5F.close(fileId.Value);
+            Hdf5Identifier fileId = H5F.create(_filename, H5F.ACC_EXCL).ToId();
 
-            return new Hdf5File(_filename);
+            if (fileId.Value > 0)
+            {
+                H5F.close(fileId.Value);
+                return new Hdf5File(_filename);
+            }
+
+            return null;
         }
 
         /// <summary>

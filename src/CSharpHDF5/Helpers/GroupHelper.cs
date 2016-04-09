@@ -100,35 +100,43 @@ namespace CSharpHDF5.Helpers
 
         public static object GetObject(Hdf5Identifier _fileId, AbstractHdf5Object _parent, string _objectName)
         {
-            string fullPath = _parent.Path.Combine(_objectName);
+            Hdf5Path combinedPath = _parent.Path.Append(_objectName);
 
-            H5O.info_t gInfo = new H5O.info_t();
-            H5O.get_info_by_name(_fileId.Value, fullPath, ref gInfo);
+            if (combinedPath != null)
+            {
+                string fullPath = combinedPath.FullPath;
 
-            var id = H5O.open(_fileId.Value, fullPath).ToId();
-            if (id.Value > 0)
-            {                
-                if (gInfo.type == H5O.type_t.DATASET)
+                H5O.info_t gInfo = new H5O.info_t();
+                H5O.get_info_by_name(_fileId.Value, fullPath, ref gInfo);
+
+                var id = H5O.open(_fileId.Value, fullPath).ToId();
+                if (id.Value > 0)
                 {
-                    return DatasetHelper.LoadDataset(_fileId, id, fullPath);
-                }
+                    if (gInfo.type == H5O.type_t.DATASET)
+                    {
+                        return DatasetHelper.LoadDataset(_fileId, id, fullPath);
+                    }
 
-                if (gInfo.type == H5O.type_t.GROUP)
-                {
-                    Hdf5Group group = new Hdf5Group(_fileId, id, fullPath);
-                    group.FileId = _fileId;
-                    group.LoadChildObjects();
-                    return group;
-                }
+                    if (gInfo.type == H5O.type_t.GROUP)
+                    {
+                        Hdf5Group group = new Hdf5Group(_fileId, id, fullPath);
+                        group.FileId = _fileId;
+                        group.LoadChildObjects();
+                        return group;
+                    }
 
-                H5O.close(id.Value);
+                    H5O.close(id.Value);
+                }
             }
 
             return null;
         }
 
-        public static Hdf5Group CreateGroupAddToList(ReadonlyList<Hdf5Group> _groups, Hdf5Identifier _fileId,
-            Hdf5Path _parentPath, string _name)
+        public static Hdf5Group CreateGroupAddToList(
+            ReadonlyList<Hdf5Group> _groups, 
+            Hdf5Identifier _fileId,
+            Hdf5Path _parentPath, 
+            string _name)
         {
             Hdf5Group group = CreateGroup(_fileId, _parentPath, _name);
 
