@@ -4,6 +4,7 @@ using System.IO;
 using CSharpHDF5.Enums;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
+using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
 namespace CSharpHDF5.Objects
@@ -16,21 +17,39 @@ namespace CSharpHDF5.Objects
         /// <param name="_filename"></param>
         public Hdf5File(string _filename)
         {
-            if (File.Exists(_filename))
+            if (!File.Exists(_filename))
             {
-                Id = H5F.open(_filename, H5F.ACC_RDWR).ToId();
+                throw new FileNotFoundException("Check file path, or use static Hdf5File.CreateFile to create new one.");
+            }
+
+            Id = H5F.open(_filename, H5F.ACC_RDWR).ToId();
+
+            if (Id.Value > 0)
+            {
+                Path = new Hdf5Path(".");
+
+                Groups = new ReadonlyList<Hdf5Group>();
+                Datasets = new ReadonlyList<Hdf5Dataset>();
+
+                GroupHelper.PopulateChildrenObjects(Id, this);
             }
             else
             {
-                Id = H5F.create(_filename, H5F.ACC_TRUNC).ToId();
+                throw new Exception("Unknown exception opening file");
+            }
+        }
+
+        public static Hdf5File CreateFile(string _filename)
+        {
+            if (File.Exists(_filename))
+            {
+                throw new Exception("File already exists.");
             }
 
-            Path = new Hdf5Path(".");
+            Hdf5Identifier fileId = H5F.create(_filename, H5F.ACC_CREAT).ToId();
+            H5F.close(fileId.Value);
 
-            Groups = new ReadonlyList<Hdf5Group>();
-            Datasets = new ReadonlyList<Hdf5Dataset>();
-
-            GroupHelper.PopulateChildrenObjects(Id, this);
+            return new Hdf5File(_filename);
         }
 
         /// <summary>
