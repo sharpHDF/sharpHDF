@@ -30,7 +30,7 @@ namespace CSharpHDF5.Helpers
                 Hdf5DimensionProperty property = new Hdf5DimensionProperty
                 {
                     CurrentSize = dims[i],
-                    MaximumSize = maxDims[i]
+                    //MaximumSize = maxDims[i]
                 };
                 dataspace.DimensionProperties.Add(property);
             }

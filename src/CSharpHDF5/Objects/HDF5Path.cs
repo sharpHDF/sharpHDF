@@ -42,15 +42,6 @@ namespace CSharpHDF5.Objects
             }
         }
 
-        public string Combine(string _child)
-        {
-            if (FullPath == "/")
-            {
-                return _child;
-            }
-
-            return FullPath + "/" + _child;
-        }
 
         public string FullPath { get; private set; }
         public string ParentPath { get; private set; }

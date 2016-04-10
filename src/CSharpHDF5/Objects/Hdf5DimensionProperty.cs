@@ -8,7 +8,7 @@
         public Hdf5DimensionProperty()
         {
             CurrentSize = 1;
-            MaximumSize = ulong.MaxValue;
+            //MaximumSize = 0;
         }
 
         /// <summary>
@@ -19,6 +19,6 @@
         /// <summary>
         /// Maximum size of a dataset.  Can only be set at creation of the dataset.
         /// </summary>
-        public ulong MaximumSize { get; set; }
+        //public ulong MaximumSize { get; set; }
     }
 }

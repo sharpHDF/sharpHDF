@@ -251,7 +251,7 @@ namespace CSharpHDF5.Helpers
             int _numberOfDimensions,
             List<Hdf5DimensionProperty> _properties)
         {
-            Hdf5Dataset dataset = DatasetHelper.CreateDataset(
+            Hdf5Dataset dataset = CreateDataset(
                 _fileId, 
                 _parentPath, 
                 _name, 
@@ -277,14 +277,22 @@ namespace CSharpHDF5.Helpers
         {
             Hdf5Path path = _parentPath.Append(_name);
 
-            ulong[] dimensionSize = new ulong[_numberOfDimensions];
-            ulong[] maxSize = new ulong[_numberOfDimensions];
+            UInt64[] dimensionSize = new UInt64[_numberOfDimensions];
+            UInt64[] maxSize = null; // new UInt64[_numberOfDimensions];
 
             int i = 0;
             foreach (var property in _properties)
             {
                 dimensionSize[i] = property.CurrentSize;
-                maxSize[i] = property.MaximumSize;
+
+                //if (property.MaximumSize == UInt64.MaxValue)
+                //{
+                //    maxSize[i] = H5S.UNLIMITED;
+                //}
+                //else
+                //{
+                //    maxSize[i] = property.MaximumSize;
+                //}                
 
                 i++;
             }
@@ -305,9 +313,9 @@ namespace CSharpHDF5.Helpers
                     DataType = TypeHelper.GetDataType(datasetId),
                     Dataspace = DataspaceHelper.GetDataspace(datasetId)
                 };
-            }            
 
-            H5D.close(datasetId.Value);
+                H5D.close(datasetId.Value);
+            }                        
 
             return dataset;
         }

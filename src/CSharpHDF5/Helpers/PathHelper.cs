@@ -12,7 +12,8 @@ namespace CSharpHDF5.Helpers
                 throw new ArgumentNullException("_childName");
             }
 
-            if (_path != null)
+            if (_path != null
+                && _path.FullPath!="/")
             {
                 string fullPath = _path.FullPath;
 

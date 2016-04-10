@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Objects;
