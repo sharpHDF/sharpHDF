@@ -11,6 +11,7 @@
         UInt32,
         UInt64,
         Single,
-        Double
+        Double,
+        String
     }
 }

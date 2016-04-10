@@ -1,8 +1,9 @@
 ﻿using CSharpHDF5.Enums;
+using CSharpHDF5.Structs;
 
-namespace CSharpHDF5.Structs
+namespace CSharpHDF5.Objects
 {
-    public struct Hdf5DataType 
+    public class Hdf5DataType 
     {
         internal Hdf5Identifier Id { get; set; }
 

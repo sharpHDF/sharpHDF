@@ -13,6 +13,6 @@
         /// <summary>
         /// String value of the Attribute.
         /// </summary>
-        public string Value { get; set; }
+        public object Value { get; set; }
     }
 }

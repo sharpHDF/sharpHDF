@@ -1,5 +1,6 @@
 ﻿using System;
 using CSharpHDF5.Enums;
+using CSharpHDF5.Objects;
 using CSharpHDF5.Structs;
 using HDF.PInvoke;
 
@@ -8,26 +9,17 @@ namespace CSharpHDF5.Helpers
     internal static class TypeHelper
     {
 
-        /// <summary>
-        /// Returns the datatype.  
-        /// This assumes that the object is already open
-        /// </summary>
-        /// <param name="_objectId"></param>
-        /// <returns></returns>
-        public static Hdf5DataType GetDataType(Hdf5Identifier _objectId)
+        public static Hdf5DataType GetDataTypeByType(Hdf5Identifier _typeId)
         {
-            var typeId = H5D.get_type(_objectId.Value).ToId();
-            var typeNative = H5T.get_native_type(typeId.Value, H5T.direction_t.DEFAULT).ToId();           
-            var typeClass = H5T.get_class(typeId.Value);
-            var typeSize = (int) H5T.get_size(typeId.Value);
-
-            var typeSign = H5T.get_sign(typeId.Value);
-            var typeOrder = H5T.get_order(typeId.Value);
+            var typeClass = H5T.get_class(_typeId.Value);
+            var typeSize = (int)H5T.get_size(_typeId.Value);
+            var typeSign = H5T.get_sign(_typeId.Value);
+            var typeOrder = H5T.get_order(_typeId.Value);
 
             Hdf5DataType dt = new Hdf5DataType
             {
-                Id = typeId,
-                Size = typeSize
+                Id = _typeId,
+                Size = typeSize,
             };
 
             if (typeOrder == H5T.order_t.BE)
@@ -101,10 +93,33 @@ namespace CSharpHDF5.Helpers
                     dt.NativeType = H5T.NATIVE_DOUBLE.ToId();
                 }
             }
+            else if (typeClass == H5T.class_t.STRING)
+            {
+                dt.Type = Hdf5DataTypes.String;
+                dt.NativeType = H5T.C_S1.ToId();
+            }
 
-            H5T.close(typeId.Value);
+            H5T.close(_typeId.Value);
 
             return dt;
+        }
+
+        /// <summary>
+        /// Returns the datatype.  
+        /// This assumes that the object is already open
+        /// </summary>
+        /// <param name="_objectId"></param>
+        /// <returns></returns>
+        public static Hdf5DataType GetDataType(Hdf5Identifier _objectId)
+        {
+            var typeId = H5D.get_type(_objectId.Value).ToId();
+
+            if (typeId.Value > 0)
+            {
+                return GetDataTypeByType(typeId);
+            }
+
+            return null;
         }
 
         public static Hdf5Identifier GetNativeType(Hdf5DataTypes _datatype)
