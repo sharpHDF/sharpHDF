@@ -1,5 +1,6 @@
 ﻿using System;
 using CSharpHDF5.Enums;
+using CSharpHDF5.Exceptions;
 using CSharpHDF5.Objects;
 using CSharpHDF5.Structs;
 using HDF.PInvoke;
@@ -149,6 +150,68 @@ namespace CSharpHDF5.Helpers
             }
 
             throw new ArgumentOutOfRangeException("_datatype", "Unknown type");
+        }
+
+        public static Hdf5DataTypes GetDataTypesEnum<T>(T _value)
+        {
+            Type t = typeof(T);
+
+            if (t == typeof(byte))
+            {
+                return Hdf5DataTypes.UInt8;
+            }
+
+            if (t == typeof (UInt16))
+            {
+                return Hdf5DataTypes.UInt16;                
+            }
+
+            if (t == typeof (UInt32))
+            {
+                return Hdf5DataTypes.Int32;
+            }
+
+            if (t == typeof (UInt64))
+            {
+                return Hdf5DataTypes.UInt64;
+            }
+
+            if (t == typeof (sbyte))
+            {
+                return Hdf5DataTypes.Int8;
+            }
+
+            if (t == typeof (Int16))
+            {
+                return Hdf5DataTypes.Int16;
+            }
+
+            if (t == typeof (Int32))
+            {
+                return Hdf5DataTypes.Int32;
+            }
+
+            if (t == typeof (Int64))
+            {
+                return Hdf5DataTypes.Int64;
+            }
+
+            if (t == typeof (Single))
+            {
+                return Hdf5DataTypes.Single;
+            }
+
+            if (t == typeof (Double))
+            {
+                return Hdf5DataTypes.Double;
+            }
+
+            if (t == typeof (string))
+            {
+                return Hdf5DataTypes.String;
+            }
+
+            throw new Hdf5UnsupportedDataTypeException();
         }
     }
 }

@@ -48,7 +48,9 @@
     <Compile Include="Enums\Hdf5DataTypes.cs" />
     <Compile Include="Exceptions\Hdf5FileExistsException.cs" />
     <Compile Include="Exceptions\Hdf5FileNotFoundException.cs" />
+    <Compile Include="Exceptions\Hdf5TypeMismatchException.cs" />
     <Compile Include="Exceptions\Hdf5UnknownException.cs" />
+    <Compile Include="Exceptions\Hdf5UnsupportedDataTypeException.cs" />
     <Compile Include="Helpers\AttributeHelper.cs" />
     <Compile Include="Helpers\DatasetHelper.cs" />
     <Compile Include="Helpers\DataspaceHelper.cs" />

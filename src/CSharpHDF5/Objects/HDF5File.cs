@@ -85,6 +85,16 @@ namespace CSharpHDF5.Objects
             }
         }
 
+        public void AddAttribute<T>(string _name, T _value)
+        {
+            Hdf5Attribute attribute = AttributeHelper.
+        }
+
+        public void DeleteAttribute(string _name)
+        {
+            
+        }
+
         /// <summary>
         /// List of the groups that are contained at the top level of the file
         /// </summary>

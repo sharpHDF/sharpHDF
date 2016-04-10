@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Enums;
+using CSharpHDF5.Exceptions;
 using CSharpHDF5.Objects;
 using CSharpHDF5.Structs;
 using HDF.PInvoke;
@@ -54,6 +55,16 @@ namespace CSharpHDF5.Helpers
                 }, new IntPtr());
 
             return attributes;
+        }
+
+        /// <summary>
+        /// Assumes that parenent object is already open
+        /// </summary>
+        /// <param name="_objectId"></param>
+        /// <param name="_title"></param>
+        public static void DeleteAttribute(Hdf5Identifier _objectId, string _title)
+        {
+            int result = H5A.delete(_objectId.Value, _title);
         }
 
         public static Hdf5Attribute GetAttribute(Hdf5Identifier _attributeId, string _title, Hdf5DataType _type)
@@ -119,6 +130,70 @@ namespace CSharpHDF5.Helpers
             }
         }
 
+        /// <summary>
+        /// Currently does not support arrays
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_objectId"></param>
+        /// <param name="_title"></param>
+        /// <param name="_value"></param>
+        /// <returns></returns>
+        public static Hdf5Attribute CreateAttribute<T>(Hdf5Identifier _objectId, string _title, T _value)
+        {
+            ulong[] sizes = new ulong[1] {1};
+            
+            Hdf5Identifier dataspaceId = H5S.create_simple(1, sizes, null).ToId();
+
+            var datatype = TypeHelper.GetDataTypesEnum(_value);
+            Hdf5Identifier typeId = H5T.copy(TypeHelper.GetNativeType(datatype).Value).ToId();
+            
+            var dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
+            var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
+
+            Hdf5Identifier attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
+
+            if (attributeId.Value > 0)
+            {
+                WriteValue(dataTypeObject, attributeId, _value);
+            }
+
+            Hdf5Attribute attribute = GetAttribute(attributeId, _title, dataTypeObject);
+
+            H5S.close(dataspaceId.Value);
+            H5T.close(typeId.Value);
+            H5A.close(attributeId.Value);
+
+            return attribute;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_objectId"></param>
+        /// <param name="_title"></param>
+        /// <param name="_newValue"></param>
+        /// <returns></returns>
+        public static void UpdateAttribute<T>(Hdf5Identifier _objectId, string _title, T _newValue)
+        {
+            Hdf5Identifier attributeId = H5A.open(_objectId.Value, _title).ToId();
+
+            if (attributeId.Value > 0)
+            {
+                Hdf5DataType type = TypeHelper.GetDataType(attributeId);
+                Hdf5DataTypes enumType = TypeHelper.GetDataTypesEnum(_newValue);
+
+                if (type.Type == enumType)
+                {
+                    WriteValue(type, attributeId, _newValue);    
+                }
+                else
+                {
+                    throw new Hdf5TypeMismatchException();
+                }
+            }
+        }
+
         public static bool CreateStringAttribute(int _objectId, string _title, string _description)
         {
             int attributeSpace = 0;
@@ -161,8 +236,6 @@ namespace CSharpHDF5.Helpers
                 }
             }
         }
-
-
 
         public static Object ReadValue(
             Hdf5DataType _dataType,
@@ -219,6 +292,25 @@ namespace CSharpHDF5.Helpers
             }
 
             return null;
+        }
+
+        private static void WriteValue<T>(
+            Hdf5DataType _dataType,
+            Hdf5Identifier _attributeId,
+            T _value)
+        {
+            T[] value = new T[1];
+            value[0] = _value;
+
+            GCHandle arrayHandle = GCHandle.Alloc(value, GCHandleType.Pinned);
+
+            var dataType = H5T.copy(_dataType.NativeType.Value).ToId();
+
+            int result = H5A.write(_attributeId.Value, dataType.Value, arrayHandle.AddrOfPinnedObject());
+
+            arrayHandle.Free();
+            
+            H5T.close(dataType.Value);
         }
 
         private static T ReadValue<T>(
