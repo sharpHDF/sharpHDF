@@ -37,8 +37,7 @@ namespace CSharpHDF5.Helpers
                             else
                             {
                                 attribute = GetAttribute(attributeId, attributeName, type);
-                            }
-                                
+                            }                                
 
                             if (attribute != null)
                             {
@@ -226,7 +225,7 @@ namespace CSharpHDF5.Helpers
             Hdf5DataType _dataType,
             Hdf5Identifier _attributeId)
         {
-            T value = default(T);
+            T[] value = new T[1];
 
             GCHandle arrayHandle = GCHandle.Alloc(value, GCHandleType.Pinned);
 
@@ -238,7 +237,7 @@ namespace CSharpHDF5.Helpers
 
             H5T.close(dataType.Value);
 
-            return value;
+            return value[0];
         }
     }
 }
