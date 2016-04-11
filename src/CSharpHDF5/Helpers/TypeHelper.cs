@@ -147,6 +147,8 @@ namespace CSharpHDF5.Helpers
                     return H5T.NATIVE_FLOAT.ToId();
                 case Hdf5DataTypes.Double:
                     return H5T.NATIVE_DOUBLE.ToId();
+                case Hdf5DataTypes.String:
+                    return H5T.C_S1.ToId();
             }
 
             throw new ArgumentOutOfRangeException("_datatype", "Unknown type");

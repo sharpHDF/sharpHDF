@@ -131,6 +131,31 @@ namespace CSharpHDF5.Helpers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_objectId"></param>
+        /// <param name="_attributes"></param>
+        /// <param name="_title"></param>
+        /// <param name="_value"></param>
+        /// <returns></returns>
+        public static Hdf5Attribute CreateAttributeAddToList<T>(
+            Hdf5Identifier _objectId,
+            ReadonlyList<Hdf5Attribute> _attributes,
+            string _title,
+            T _value)
+        {
+            Hdf5Attribute attribute = CreateAttribute(_objectId, _title, _value);
+
+            if (attribute != null)
+            {
+                _attributes.Add(attribute);
+            }
+
+            return attribute;
+        }
+
+        /// <summary>
         /// Currently does not support arrays
         /// </summary>
         /// <typeparam name="T"></typeparam>

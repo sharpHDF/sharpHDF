@@ -310,6 +310,7 @@ namespace CSharpHDF5.Helpers
             {
                 dataset = new Hdf5Dataset(datasetId, path.FullPath)
                 {
+                    FileId = _fileId,
                     DataType = TypeHelper.GetDataType(datasetId),
                     Dataspace = DataspaceHelper.GetDataspace(datasetId)
                 };

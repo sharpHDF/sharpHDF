@@ -1,16 +1,19 @@
 ﻿using System;
 using CSharpHDF5.Helpers;
+using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
+using HDF.PInvoke;
 
 namespace CSharpHDF5.Objects
 {
     /// <summary>
     /// Contains information around a HDF5 Dataset
     /// </summary>
-    public class Hdf5Dataset : AbstractHdf5Object
+    public class Hdf5Dataset : AbstractHdf5Object, IHasAttributes
     {
         public Hdf5Dataset()
         {
+            m_Attributes = new ReadonlyList<Hdf5Attribute>();
         }
 
         internal Hdf5Dataset(Hdf5Identifier _id, string _path)
@@ -19,6 +22,7 @@ namespace CSharpHDF5.Objects
 
             Path = new Hdf5Path(_path);
             Name = Path.Name;
+            m_Attributes = new ReadonlyList<Hdf5Attribute>();
         }
 
         /// <summary>
@@ -52,6 +56,50 @@ namespace CSharpHDF5.Objects
         public void SetData(Array _array)
         {
             
+        }
+
+        private ReadonlyList<Hdf5Attribute> m_Attributes;
+
+        /// <summary>
+        /// List of attributes that are attached to this object
+        /// </summary>
+        public ReadonlyList<Hdf5Attribute> Attributes
+        {
+            get
+            {
+                if (m_Attributes == null)
+                {
+                    m_Attributes = AttributeHelper.GetAttributes(this);
+                }
+
+                return m_Attributes;
+            }
+        }
+
+        public Hdf5Attribute AddAttribute<T>(string _name, T _value)
+        {
+            Hdf5Attribute attribute = null;
+
+            var id = H5O.open(FileId.Value, Path.FullPath);
+            if (id > 0)
+            {
+                attribute = AttributeHelper.CreateAttributeAddToList(Id, m_Attributes, _name, _value);
+                H5O.close(id);
+            }
+
+            return attribute;
+        }
+
+        public void DeleteAttribute(Hdf5Attribute _attribute)
+        {
+            var id = H5O.open(Id.Value, Path.FullPath);
+            if (id > 0)
+            {
+                AttributeHelper.DeleteAttribute(Id, _attribute.Name);
+
+                m_Attributes.Remove(_attribute);
+                H5O.close(id);
+            }
         }
     }
 }

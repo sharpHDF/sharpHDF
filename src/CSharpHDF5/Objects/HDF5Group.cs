@@ -4,6 +4,7 @@ using CSharpHDF5.Enums;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
+using HDF.PInvoke;
 
 namespace CSharpHDF5.Objects
 {
@@ -30,17 +31,59 @@ namespace CSharpHDF5.Objects
 
             Groups = new ReadonlyList<Hdf5Group>();                      
             Datasets = new ReadonlyList<Hdf5Dataset>();
+            m_Attributes = new ReadonlyList<Hdf5Attribute>();
         }
 
         public string Name { get; set; }
 
         public ReadonlyList<Hdf5Group> Groups { get; set; }
 
-        public ReadonlyList<Hdf5Dataset> Datasets { get; set; } 
+        public ReadonlyList<Hdf5Dataset> Datasets { get; set; }
 
+        private ReadonlyList<Hdf5Attribute> m_Attributes;
+
+        /// <summary>
+        /// List of attributes that are attached to this object
+        /// </summary>
         public ReadonlyList<Hdf5Attribute> Attributes
         {
-            get { return AttributeHelper.GetAttributes(this); }
+            get
+            {
+                if (m_Attributes == null)
+                {
+                    m_Attributes = AttributeHelper.GetAttributes(this);
+                }
+
+                return m_Attributes;
+            }
+        }
+
+        public Hdf5Attribute AddAttribute<T>(string _name, T _value)
+        {
+            Hdf5Attribute attribute = null; 
+            
+            var id = H5G.open(m_FileId.Value, Path.FullPath);
+            if (id > 0)
+            {
+                attribute = AttributeHelper.CreateAttributeAddToList(Id, m_Attributes, _name, _value);
+                H5G.close(id);
+            }
+
+            return attribute;
+        }
+
+        public void DeleteAttribute(Hdf5Attribute _attribute)
+        {
+            var id = H5G.open(Id.Value, Path.FullPath);
+
+            if (id > 0)
+            {
+                AttributeHelper.DeleteAttribute(Id, _attribute.Name);
+
+                m_Attributes.Remove(_attribute);
+
+                H5G.close(id);
+            }            
         }
 
         internal void LoadChildObjects()

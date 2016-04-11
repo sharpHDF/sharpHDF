@@ -31,6 +31,7 @@ namespace CSharpHDF5.Objects
 
                 Groups = new ReadonlyList<Hdf5Group>();
                 Datasets = new ReadonlyList<Hdf5Dataset>();
+                m_Attributes = new ReadonlyList<Hdf5Attribute>();
 
                 GroupHelper.PopulateChildrenObjects(Id, this);
             }
@@ -67,7 +68,7 @@ namespace CSharpHDF5.Objects
             Id = 0.ToId();
         }
 
-        private ReadonlyList<Hdf5Attribute> m_Attributes = null; 
+        private ReadonlyList<Hdf5Attribute> m_Attributes; 
 
         /// <summary>
         /// List of attributes that are attached to this object
@@ -85,14 +86,16 @@ namespace CSharpHDF5.Objects
             }
         }
 
-        public void AddAttribute<T>(string _name, T _value)
+        public Hdf5Attribute AddAttribute<T>(string _name, T _value)
         {
-            Hdf5Attribute attribute = AttributeHelper.
+            return AttributeHelper.CreateAttributeAddToList(Id, m_Attributes, _name, _value);
         }
 
-        public void DeleteAttribute(string _name)
+        public void DeleteAttribute(Hdf5Attribute _attribute)
         {
-            
+            AttributeHelper.DeleteAttribute(Id, _attribute.Name);
+
+            m_Attributes.Remove(_attribute);
         }
 
         /// <summary>
