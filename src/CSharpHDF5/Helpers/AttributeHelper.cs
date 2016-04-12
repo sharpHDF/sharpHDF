@@ -166,27 +166,52 @@ namespace CSharpHDF5.Helpers
         public static Hdf5Attribute CreateAttribute<T>(Hdf5Identifier _objectId, string _title, T _value)
         {
             ulong[] sizes = new ulong[1] {1};
-            
-            Hdf5Identifier dataspaceId = H5S.create_simple(1, sizes, null).ToId();
+            Hdf5Identifier dataspaceId;
+            Hdf5Identifier attributeId;
+            Hdf5Identifier typeId;
+            Hdf5Attribute attribute = null;
+            Hdf5DataType dataTypeObject = null;
 
             var datatype = TypeHelper.GetDataTypesEnum(_value);
-            Hdf5Identifier typeId = H5T.copy(TypeHelper.GetNativeType(datatype).Value).ToId();
             
-            var dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
-            var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
-
-            Hdf5Identifier attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
-
-            if (attributeId.Value > 0)
+            if (datatype != Hdf5DataTypes.String)
             {
-                WriteValue(dataTypeObject, attributeId, _value);
-            }
+                typeId = TypeHelper.GetNativeType(datatype);
+                dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
 
-            Hdf5Attribute attribute = GetAttribute(attributeId, _title, dataTypeObject);
+                var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
+
+                dataspaceId = H5S.create_simple(1, sizes, null).ToId();
+
+                attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
+
+                if (attributeId.Value > 0)
+                {
+                    WriteValue(dataTypeObject, attributeId, _value);
+                }
+            }
+            else
+            {
+                string tempValue = Convert.ToString(_value);
+
+                dataspaceId = H5S.create(H5S.class_t.SCALAR).ToId();
+                typeId = H5T.copy(H5T.C_S1).ToId();
+                var result = H5T.set_size(typeId.Value, new IntPtr(tempValue.Length));
+                
+                dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
+
+                attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
+
+                IntPtr valueArray = Marshal.StringToHGlobalAnsi(tempValue);
+                H5A.write(attributeId.Value, typeId.Value, valueArray);
+                Marshal.FreeHGlobal(valueArray);
+            }
 
             H5S.close(dataspaceId.Value);
             H5T.close(typeId.Value);
             H5A.close(attributeId.Value);
+
+            attribute = GetAttribute(attributeId, _title, dataTypeObject);
 
             return attribute;
         }
