@@ -133,7 +133,7 @@ namespace CSharpHDF5Tests.Objects
         [Test]
         public void GetAttributeOnDataset()
         {
-            string fileName = GetFilename("createattributeondataset.h5");
+            string fileName = GetFilename("getattributeondataset.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
             Hdf5Group group = file.AddGroup("group1");

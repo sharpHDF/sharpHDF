@@ -23,7 +23,7 @@ namespace CSharpHDF5.Helpers
             Hdf5DataType datatype = TypeHelper.GetDataType(_datasetId);
             Hdf5Dataspace dataspace = DataspaceHelper.GetDataspace(_datasetId);
 
-            Hdf5Dataset dataset = new Hdf5Dataset(_fileId, _fullPath)
+            Hdf5Dataset dataset = new Hdf5Dataset(_datasetId, _fullPath)
             {
                 FileId = _fileId,
                 Dataspace = dataspace,
@@ -299,6 +299,7 @@ namespace CSharpHDF5.Helpers
 
             Hdf5Identifier dataspaceId = H5S.create_simple(_numberOfDimensions, dimensionSize, maxSize).ToId();
             
+            //TODO handle string datasets
             Hdf5Identifier typeId = H5T.copy(TypeHelper.GetNativeType(_datatype).Value).ToId();
             var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
 

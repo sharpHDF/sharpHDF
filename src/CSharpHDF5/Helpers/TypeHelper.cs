@@ -31,6 +31,10 @@ namespace CSharpHDF5.Helpers
             {
                 dt.ByteOrder = Hdf5ByteOrder.LittleEndian;
             }
+            else if (typeOrder == H5T.order_t.ONE)
+            {
+                dt.ByteOrder = Hdf5ByteOrder.None;
+            }
 
             if (typeClass == H5T.class_t.INTEGER)
             {
@@ -99,8 +103,6 @@ namespace CSharpHDF5.Helpers
                 dt.Type = Hdf5DataTypes.String;
                 dt.NativeType = H5T.C_S1.ToId();
             }
-
-            H5T.close(_typeId.Value);
 
             return dt;
         }

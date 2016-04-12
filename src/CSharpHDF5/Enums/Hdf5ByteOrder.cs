@@ -3,6 +3,7 @@
     public enum Hdf5ByteOrder
     {
         LittleEndian = 0,
-        BigEndian = 1
+        BigEndian = 1,
+        None = 2
     }
 }

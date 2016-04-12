@@ -196,22 +196,29 @@ namespace CSharpHDF5.Helpers
 
                 dataspaceId = H5S.create(H5S.class_t.SCALAR).ToId();
                 typeId = H5T.copy(H5T.C_S1).ToId();
-                var result = H5T.set_size(typeId.Value, new IntPtr(tempValue.Length));
+                int length = tempValue.Length + 1;
+                var result = H5T.set_size(typeId.Value, new IntPtr(length));
                 
                 dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
 
                 attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
 
                 IntPtr valueArray = Marshal.StringToHGlobalAnsi(tempValue);
-                H5A.write(attributeId.Value, typeId.Value, valueArray);
+                result = H5A.write(attributeId.Value, typeId.Value, valueArray);
                 Marshal.FreeHGlobal(valueArray);
             }
+
+            attribute = new Hdf5Attribute
+            {
+                Value = _value,
+                Name = _title,
+                Id = attributeId
+            };
+
 
             H5S.close(dataspaceId.Value);
             H5T.close(typeId.Value);
             H5A.close(attributeId.Value);
-
-            attribute = GetAttribute(attributeId, _title, dataTypeObject);
 
             return attribute;
         }
