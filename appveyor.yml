@@ -33,9 +33,9 @@ build:
   publish_nuget: true
  
 after_test: 
-    - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:".\packages\NUnit.ConsoleRunner.3.2.0\tools\nunit3-console.exe" -targetargs:"/noresults /noisolation /testcontainer:"".\CSharpHDF5Tests\bin\x64\Debug\CSharpHDF5Tests.dll" -filter:"+[CSharpHDF5]*  -[CSharpHDF5]CSharpHDF5.Properties.*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\csharphdf5_coverage.xml
+    - c:\projects\csharphdf5\src\CSharpHDF5\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"c:\projects\csharphdf5\src\CSharpHDF5\packages\NUnit.ConsoleRunner.3.2.0\tools\nunit3-console.exe" -targetargs:"/noresults /noisolation /testcontainer:""c:\projects\csharphdf5\src\CSharpHDF5Tests\bin\x64\Debug\CSharpHDF5Tests.dll" -filter:"+[CSharpHDF5]*  -[CSharpHDF5]CSharpHDF5.Properties.*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:c:\projects\csharphdf5_coverage.xml
     - pip install codecov
-    - codecov -f "csharphdf5_coverage.xml"
+    - codecov -f "c:\projects\csharphdf5_coverage.xml"
  
 deploy:
   provider: NuGet
