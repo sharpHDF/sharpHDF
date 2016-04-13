@@ -6,7 +6,8 @@ environment:
     
 before_build:
   - nuget restore src/CSharpHDF5/CSharpHDF5.sln
-
+  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;C:\\projects\\csharphdf5\\src\\CSharpHDF5\\packages\\HDF.PInvoke.1.8.16.11\\lib\\native\\bin64\\;%PATH%"
+    
 assembly_info:
   patch: true
   file: AssemblyInfo.*
@@ -33,7 +34,6 @@ build:
  
 after_test: 
     - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:".\packages\NUnit.ConsoleRunner.3.2.0\tools\nunit3-console.exe" -targetargs:"/noresults /noisolation /testcontainer:"".\CSharpHDF5Tests\bin\x64\Debug\CSharpHDF5Tests.dll" -filter:"+[CSharpHDF5]*  -[CSharpHDF5]CSharpHDF5.Properties.*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\csharphdf5_coverage.xml
-    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "csharphdf5_coverage.xml"
  
