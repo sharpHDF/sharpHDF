@@ -35,7 +35,7 @@ build:
 after_test: 
     - c:\projects\csharphdf5\cover.bat
     - pip install codecov
-    - codecov -f "c:\projects\csharphdf5_coverage.xml" -X gcov
+    - codecov -f "c:\projects\csharphdf5\csharphdf5-coverage.xml" -X gcov
  
 deploy:
   provider: NuGet
