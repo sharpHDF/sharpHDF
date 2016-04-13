@@ -33,7 +33,7 @@ build:
   publish_nuget: true
  
 after_test: 
-    - c:\projects\csharphdf5\src\CSharpHDF5\test.bat
+    - c:\projects\csharphdf5\test.bat
     - pip install codecov
     - codecov -f "c:\projects\csharphdf5_coverage.xml" -X gcov
  
