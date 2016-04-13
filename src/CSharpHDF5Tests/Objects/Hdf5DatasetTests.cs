@@ -12,28 +12,14 @@ using NUnit.Framework;
 namespace CSharpHDF5Tests.Objects
 {
     [TestFixture]
-    public class Hdf5DatasetTests
+    public class Hdf5DatasetTests : BaseTest
     {
-        private string m_Directory = @"c:\temp\hdf5tests\datasettests";
-
         [OneTimeSetUp]
         public void Setup()
         {
-            if (!Directory.Exists(m_Directory))
-            {
-                Directory.CreateDirectory(m_Directory);
-            }
+            DirectoryName = @"c:\temp\hdf5tests\datasettests";
 
-            string[] files = Directory.GetFiles(m_Directory);
-            foreach (string file in files)
-            {
-                File.Delete(file);
-            }
-        }
-
-        private string GetFilename(string _file)
-        {
-            return Path.Combine(m_Directory, _file);
+            CleanDirectory();
         }
 
         [Test]

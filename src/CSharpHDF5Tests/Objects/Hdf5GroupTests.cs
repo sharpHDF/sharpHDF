@@ -5,28 +5,14 @@ using NUnit.Framework;
 namespace CSharpHDF5Tests.Objects
 {
     [TestFixture]
-    public class Hdf5GroupTests
+    public class Hdf5GroupTests : BaseTest
     {
-        private string m_Directory = @"c:\temp\hdf5tests\grouptests";
-
         [OneTimeSetUp]
         public void Setup()
         {
-            if (!Directory.Exists(m_Directory))
-            {
-                Directory.CreateDirectory(m_Directory);
-            }
+            DirectoryName = @"c:\temp\hdf5tests\grouptests";
 
-            string[] files = Directory.GetFiles(m_Directory);
-            foreach (string file in files)
-            {
-                File.Delete(file);
-            }
-        }
-
-        private string GetFilename(string _file)
-        {
-            return Path.Combine(m_Directory, _file);
+            CleanDirectory();
         }
 
         [Test]
@@ -106,6 +92,50 @@ namespace CSharpHDF5Tests.Objects
             group2 = group1.Groups[0];
             Assert.IsNotNull(group2);
             Assert.AreEqual("group2", group2.Name);
+        }
+
+        [Test]
+        public void DeleteGroup()
+        {
+            string fileName = GetFilename("deletegroup.h5");
+
+            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5Group group1 = file.AddGroup("group1");
+            Hdf5Group group2 = file.AddGroup("group2");
+            Hdf5Group group3 = file.AddGroup("group3");
+            Hdf5Group group4 = file.AddGroup("group4");
+            Hdf5Group group5 = file.AddGroup("group5");
+
+            Assert.AreEqual(5, file.Groups.Count);
+
+            //TODO - delete
+        }
+
+        [Test]
+        public void LoopThrougGroups()
+        {
+            string fileName = GetFilename("loopthroughgroups.h5");
+
+            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5Group group1 = file.AddGroup("group1");
+            Hdf5Group group2 = file.AddGroup("group2");
+            Hdf5Group group3 = file.AddGroup("group3");
+            Hdf5Group group4 = file.AddGroup("group4");
+            Hdf5Group group5 = file.AddGroup("group5");
+
+            Assert.AreEqual(5, file.Groups.Count);
+
+            foreach (Hdf5Group hdf5Group in file.Groups)
+            {
+                Assert.IsNotNull(hdf5Group);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                var group = file.Groups[i];
+            }
+            
+            file.Close();
         }
 
     }
