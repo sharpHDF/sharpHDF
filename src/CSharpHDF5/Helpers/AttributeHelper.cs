@@ -177,9 +177,9 @@ namespace CSharpHDF5.Helpers
             if (datatype != Hdf5DataTypes.String)
             {
                 var tempType = TypeHelper.GetNativeType(datatype);
+
                 typeId = H5T.copy(tempType.Value).ToId();
                 dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
-
                 var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
 
                 dataspaceId = H5S.create_simple(1, sizes, null).ToId();
@@ -252,49 +252,6 @@ namespace CSharpHDF5.Helpers
             }
         }
 
-        public static bool CreateStringAttribute(int _objectId, string _title, string _description)
-        {
-            int attributeSpace = 0;
-            int stringId = 0;
-            int attributeId = 0;
-
-            try
-            {
-                attributeSpace = H5S.create(H5S.class_t.SCALAR);
-                stringId = H5T.copy(H5T.C_S1);
-                H5T.set_size(stringId, new IntPtr(_description.Length));
-                attributeId = H5A.create(_objectId, _title, stringId, attributeSpace);
-
-                IntPtr descriptionArray = Marshal.StringToHGlobalAnsi(_description);
-                H5A.write(attributeId, stringId, descriptionArray);
-
-                Marshal.FreeHGlobal(descriptionArray);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            finally
-            {
-                if (attributeId > 0)
-                {
-                    H5A.close(attributeId);
-                }
-
-                if (stringId > 0)
-                {
-                    H5T.close(stringId);
-                }
-
-                if (attributeSpace > 0)
-                {
-                    H5S.close(attributeSpace);
-                }
-            }
-        }
-
         public static Object ReadValue(
             Hdf5DataType _dataType,
             Hdf5Identifier _attributeId)
@@ -326,17 +283,17 @@ namespace CSharpHDF5.Helpers
 
             if (_dataType.Type == Hdf5DataTypes.UInt16)
             {
-                return ReadValue<byte>(_dataType, _attributeId);
+                return ReadValue<UInt16>(_dataType, _attributeId);
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt32)
             {
-                return ReadValue<byte>(_dataType, _attributeId);
+                return ReadValue<UInt32>(_dataType, _attributeId);
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt64)
             {
-                return ReadValue<byte>(_dataType, _attributeId);
+                return ReadValue<UInt64>(_dataType, _attributeId);
             }
 
             if (_dataType.Type == Hdf5DataTypes.Single)
@@ -349,7 +306,7 @@ namespace CSharpHDF5.Helpers
                 return ReadValue<Double>(_dataType, _attributeId);
             }
 
-            return null;
+            throw new Hdf5UnknownDataType();
         }
 
         private static void WriteValue<T>(

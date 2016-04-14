@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using CSharpHDF5.Enums;
 using CSharpHDF5.Objects;
@@ -282,6 +283,89 @@ namespace CSharpHDF5Tests.Objects
             attribute2 = attibutes[0];
             Assert.AreEqual("attribute2", attribute2.Name);
             Assert.AreEqual(5, attribute2.Value);
+        }
+
+        [Test]
+        public void AllAttributeTypesOnFile()
+        {
+            string fileName = GetFilename("allattributetypesonfile.h5");
+
+            Hdf5File file = Hdf5File.CreateFile(fileName);
+
+            file.AddAttribute("attributea", "test");
+
+            sbyte b = sbyte.MaxValue;
+            file.AddAttribute("attributeb", b);
+
+            Int16 c = Int16.MaxValue;
+            file.AddAttribute("attributec", c);
+
+            Int32 d = Int32.MaxValue;
+            file.AddAttribute("attributed", d);
+
+            Int64 e = Int64.MaxValue;
+            file.AddAttribute("attributee", e);
+
+            byte f = Byte.MaxValue;
+            file.AddAttribute("attibutef", f);
+
+            UInt16 g = UInt16.MaxValue;
+            file.AddAttribute("attributeg", g);
+
+            UInt32 h = UInt32.MaxValue;
+            file.AddAttribute("attibuteh", h);
+
+            UInt64 i = UInt64.MaxValue;
+            file.AddAttribute("attributei", i);
+
+            float j = float.MaxValue;
+            file.AddAttribute("attibutej", j);
+
+            double k = double.MaxValue;
+            file.AddAttribute("attributek", k);
+
+            Assert.AreEqual(11, file.Attributes.Count);
+
+            file.Close();
+
+            file = new Hdf5File(fileName);
+            var attibutes = file.Attributes;
+            Assert.AreEqual(11, attibutes.Count);
+
+            var attribute1 = attibutes[0];
+            Assert.AreEqual("test", attribute1.Value);
+
+            var attribute2 = attibutes[1];
+            Assert.AreEqual(sbyte.MaxValue, attribute2.Value);
+
+            var attribute3 = attibutes[2];
+            Assert.AreEqual(Int16.MaxValue, attribute3.Value);
+
+            var attribute4 = attibutes[3];
+            Assert.AreEqual(Int32.MaxValue, attribute4.Value);
+
+            var attribute5 = attibutes[4];
+            Assert.AreEqual(Int64.MaxValue, attribute5.Value);
+
+            var attribute6 = attibutes[5];
+            Assert.AreEqual(byte.MaxValue, attribute6.Value);
+
+            var attribute7 = attibutes[6];
+            Assert.AreEqual(UInt16.MaxValue, attribute7.Value);
+
+            var attribute8 = attibutes[7];
+            Assert.AreEqual(UInt32.MaxValue, attribute8.Value);
+
+            var attribute9 = attibutes[8];
+            Assert.AreEqual(UInt64.MaxValue, attribute9.Value);
+
+            var attribute10 = attibutes[9];
+            Assert.AreEqual(float.MaxValue, attribute10.Value);
+
+            var attribute11 = attibutes[10];
+            Assert.AreEqual(double.MaxValue, attribute11.Value);
+
+
         }
     }
 }

@@ -172,7 +172,7 @@ namespace CSharpHDF5.Helpers
 
             if (t == typeof (UInt32))
             {
-                return Hdf5DataTypes.Int32;
+                return Hdf5DataTypes.UInt32;
             }
 
             if (t == typeof (UInt64))

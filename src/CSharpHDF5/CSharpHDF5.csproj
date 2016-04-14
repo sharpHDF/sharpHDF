@@ -49,6 +49,7 @@
     <Compile Include="Exceptions\Hdf5FileExistsException.cs" />
     <Compile Include="Exceptions\Hdf5FileNotFoundException.cs" />
     <Compile Include="Exceptions\Hdf5TypeMismatchException.cs" />
+    <Compile Include="Exceptions\Hdf5UnknownDataType.cs" />
     <Compile Include="Exceptions\Hdf5UnknownException.cs" />
     <Compile Include="Exceptions\Hdf5UnsupportedDataTypeException.cs" />
     <Compile Include="Helpers\AttributeHelper.cs" />
