@@ -82,13 +82,13 @@ namespace CSharpHDF5.Objects
 
         public void DeleteAttribute(Hdf5Attribute _attribute)
         {
-            var id = H5O.open(Id.Value, Path.FullPath);
-            if (id > 0)
+            var id = H5O.open(FileId.Value, Path.FullPath).ToId();
+            if (id.Value > 0)
             {
-                AttributeHelper.DeleteAttribute(Id, _attribute.Name);
+                AttributeHelper.DeleteAttribute(id, _attribute.Name);
 
                 m_Attributes.Remove(_attribute);
-                H5O.close(id);
+                H5O.close(id.Value);
             }
         }
     }

@@ -10,8 +10,6 @@ namespace CSharpHDF5.Objects
 {
     public class Hdf5Group : AbstractHdf5Object, IHasGroups, IHasAttributes, IHasDatasets
     {
-        private Hdf5Identifier m_FileId;
-
         public Hdf5Group()
         {
             Groups = new ReadonlyList<Hdf5Group>();
@@ -23,7 +21,7 @@ namespace CSharpHDF5.Objects
             Hdf5Identifier _groupId, 
             string _path)
         {
-            m_FileId = _fileId;
+            FileId = _fileId;
             Id = _groupId;
 
             Path = new Hdf5Path(_path);
@@ -57,7 +55,7 @@ namespace CSharpHDF5.Objects
         {
             Hdf5Attribute attribute = null; 
             
-            var id = H5O.open(m_FileId.Value, Path.FullPath);
+            var id = H5O.open(FileId.Value, Path.FullPath);
 
             if (id > 0)
             {
@@ -71,21 +69,21 @@ namespace CSharpHDF5.Objects
 
         public void DeleteAttribute(Hdf5Attribute _attribute)
         {
-            var id = H5G.open(Id.Value, Path.FullPath);
+            var id = H5G.open(FileId.Value, Path.FullPath).ToId();
 
-            if (id > 0)
+            if (id.Value > 0)
             {
-                AttributeHelper.DeleteAttribute(Id, _attribute.Name);
+                AttributeHelper.DeleteAttribute(id, _attribute.Name);
 
                 m_Attributes.Remove(_attribute);
 
-                H5G.close(id);
+                H5G.close(id.Value);
             }            
         }
 
         internal void LoadChildObjects()
         {
-            GroupHelper.PopulateChildrenObjects(m_FileId, this);
+            GroupHelper.PopulateChildrenObjects(FileId, this);
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace CSharpHDF5.Objects
         /// <returns></returns>
         public Hdf5Group AddGroup(string _name)
         {
-            return GroupHelper.CreateGroupAddToList(Groups, m_FileId, Path, _name);
+            return GroupHelper.CreateGroupAddToList(Groups, FileId, Path, _name);
         }
 
         /// <summary>
@@ -114,7 +112,7 @@ namespace CSharpHDF5.Objects
         {
             return DatasetHelper.CreateDatasetAddToDatasets(
                 Datasets,
-                m_FileId,
+                FileId,
                 Path,
                 _name,
                 _datatype,
