@@ -56,7 +56,7 @@ namespace CSharpHDF5.Objects
                 return new Hdf5File(_filename);
             }
 
-            return null;
+            throw new Hdf5UnknownException();
         }
 
         /// <summary>

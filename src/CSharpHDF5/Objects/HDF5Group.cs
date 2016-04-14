@@ -10,12 +10,6 @@ namespace CSharpHDF5.Objects
 {
     public class Hdf5Group : AbstractHdf5Object, IHasGroups, IHasAttributes, IHasDatasets
     {
-        public Hdf5Group()
-        {
-            Groups = new ReadonlyList<Hdf5Group>();
-            Datasets = new ReadonlyList<Hdf5Dataset>();
-        }
-
         internal Hdf5Group(
             Hdf5Identifier _fileId, 
             Hdf5Identifier _groupId, 
