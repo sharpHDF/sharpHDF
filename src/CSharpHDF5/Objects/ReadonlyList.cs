@@ -17,10 +17,10 @@ namespace CSharpHDF5.Objects
             m_InternalList.Add(_item);
         }
 
-        internal void Clear()
-        {
-            m_InternalList.Clear();
-        }
+        //internal void Clear()
+        //{
+        //    m_InternalList.Clear();
+        //}
 
         internal bool Remove(T _item)
         {
@@ -41,7 +41,6 @@ namespace CSharpHDF5.Objects
         {
             get { return m_InternalList.Count; }
         }
-
 
         public IEnumerator<T> GetEnumerator()
         {
