@@ -176,7 +176,8 @@ namespace CSharpHDF5.Helpers
             
             if (datatype != Hdf5DataTypes.String)
             {
-                typeId = TypeHelper.GetNativeType(datatype);
+                var tempType = TypeHelper.GetNativeType(datatype);
+                typeId = H5T.copy(tempType.Value).ToId();
                 dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
 
                 var status = H5T.set_order(typeId.Value, H5T.order_t.LE);

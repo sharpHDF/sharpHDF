@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using CSharpHDF5.Exceptions;
 using CSharpHDF5.Objects;
@@ -79,6 +78,8 @@ namespace CSharpHDF5Tests.Objects
 
             file = new Hdf5File(filename);
             Assert.IsNotNull(file);
+
+            file.Dispose();
         }
 
         [Test]
