@@ -50,6 +50,7 @@
     <Compile Include="Objects\Hdf5FileTests.cs" />
     <Compile Include="Objects\Hdf5GroupTests.cs" />
     <Compile Include="Objects\Hdf5PathTests.cs" />
+    <Compile Include="Objects\Hdf5TypeTests.cs" />
     <Compile Include="Objects\ReadonlyListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

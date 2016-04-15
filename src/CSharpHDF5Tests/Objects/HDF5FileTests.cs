@@ -25,7 +25,7 @@ namespace CSharpHDF5Tests.Objects
 
             try
             {
-                Hdf5File file = Hdf5File.CreateFile(filename);
+                Hdf5File file = Hdf5File.Create(filename);
                 file.Close();
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("createfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             Assert.IsNotNull(file);
 
@@ -72,7 +72,7 @@ namespace CSharpHDF5Tests.Objects
         public void OpenFile()
         {
             string filename = GetFilename("openfile.h5");
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
             Assert.IsNotNull(file);
             file.Close();
 
@@ -87,7 +87,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("openfilewithexception.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             Assert.IsNotNull(file);
 
@@ -120,7 +120,7 @@ namespace CSharpHDF5Tests.Objects
 
             try
             {
-                Hdf5File file = Hdf5File.CreateFile(filename);
+                Hdf5File file = Hdf5File.Create(filename);
                 file.Close();
                 Assert.Fail("Should have caused an exception");
             }

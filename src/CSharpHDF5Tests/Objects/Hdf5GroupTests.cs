@@ -20,7 +20,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("creategroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
 
             Assert.IsNotNull(group);
@@ -34,7 +34,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("opengroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
 
             Assert.IsNotNull(group);
@@ -53,7 +53,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("creategroupingroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
 
             Assert.IsNotNull(group1);
@@ -72,7 +72,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("opengroupingroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
 
             Assert.IsNotNull(group1);
@@ -99,7 +99,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("deletegroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
             Hdf5Group group2 = file.Groups.Add("group2");
             Hdf5Group group3 = file.Groups.Add("group3");
@@ -116,7 +116,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("loopthroughgroups.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
             Hdf5Group group2 = file.Groups.Add("group2");
             Hdf5Group group3 = file.Groups.Add("group3");

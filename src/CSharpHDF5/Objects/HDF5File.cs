@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using CSharpHDF5.Enums;
 using CSharpHDF5.Exceptions;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
@@ -44,7 +42,7 @@ namespace CSharpHDF5.Objects
             }
         }
 
-        public static Hdf5File CreateFile(string _filename)
+        public static Hdf5File Create(string _filename)
         {
             if (File.Exists(_filename))
             {

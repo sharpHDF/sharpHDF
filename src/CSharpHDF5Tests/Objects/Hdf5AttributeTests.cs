@@ -23,7 +23,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("createattributeonfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             file.Attributes.Add("attribute1", "test");
             file.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, file.Attributes.Count);
@@ -36,7 +36,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("getattributeonfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             file.Attributes.Add("attribute1", "test");
             file.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, file.Attributes.Count);
@@ -61,7 +61,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("createattributeongroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
             group.Attributes.Add("attribute1", "test");
             group.Attributes.Add("attribute2", 5);
@@ -75,7 +75,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("getattributeongroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
             group.Attributes.Add("attribute1", "test");
             group.Attributes.Add("attribute2", 5);
@@ -102,7 +102,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("createattributeondataset.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
 
             List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
@@ -122,7 +122,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("getattributeondataset.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
 
             List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
@@ -156,7 +156,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("deleteattributeonfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             file.Attributes.Add("attribute1", "test");
             file.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, file.Attributes.Count);
@@ -196,7 +196,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("deleteattributeongroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
             group.Attributes.Add("attribute1", "test");
             group.Attributes.Add("attribute2", 5);
@@ -239,7 +239,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("deleteattributeondataset.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group = file.Groups.Add("group1");
 
             List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
@@ -290,7 +290,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("allattributetypesonfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
 
             file.Attributes.Add("attributea", "test");
 

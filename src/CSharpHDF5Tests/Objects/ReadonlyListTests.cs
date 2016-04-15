@@ -20,7 +20,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("contains.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
             Hdf5Group group2 = file.Groups.Add("group2");
             Hdf5Group group3 = file.Groups.Add("group3");
@@ -39,7 +39,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("copyto.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
             Hdf5Group group2 = file.Groups.Add("group2");
             Hdf5Group group3 = file.Groups.Add("group3");
@@ -55,7 +55,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string fileName = GetFilename("getenumerator.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(fileName);
+            Hdf5File file = Hdf5File.Create(fileName);
             Hdf5Group group1 = file.Groups.Add("group1");
             Hdf5Group group2 = file.Groups.Add("group2");
             Hdf5Group group3 = file.Groups.Add("group3");

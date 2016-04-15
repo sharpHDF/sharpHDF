@@ -27,7 +27,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("createdatasetinfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
             Hdf5DimensionProperty property = new Hdf5DimensionProperty {CurrentSize = 100 };
@@ -45,7 +45,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("opendatasetinfile.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
@@ -69,7 +69,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("createdatasetingroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             Hdf5Group group = file.Groups.Add("group1");
 
@@ -90,7 +90,7 @@ namespace CSharpHDF5Tests.Objects
         {
             string filename = GetFilename("opendatasetingroup.h5");
 
-            Hdf5File file = Hdf5File.CreateFile(filename);
+            Hdf5File file = Hdf5File.Create(filename);
 
             Hdf5Group group = file.Groups.Add("group1");
 
