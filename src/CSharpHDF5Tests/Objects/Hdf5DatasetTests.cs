@@ -30,7 +30,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty {CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(1, file.Datasets.Count);
 
@@ -48,7 +48,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(1, file.Datasets.Count);
             file.Close();
@@ -74,7 +74,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(0, file.Datasets.Count);
             Assert.AreEqual(1, group.Datasets.Count);
@@ -95,7 +95,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(0, file.Datasets.Count);
             Assert.AreEqual(1, group.Datasets.Count);
@@ -121,7 +121,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
 
             try
@@ -149,7 +149,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 3 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
 
             try
@@ -177,7 +177,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 3 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
             Assert.IsNotNull(dataset);
 
             try
@@ -195,6 +195,128 @@ namespace CSharpHDF5Tests.Objects
         }
 
         [Test]
+        public void Set2DArraySizeMismatch1()
+        {
+            string filename = GetFilename("set2darraysizemismatch1.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
+            Assert.IsNotNull(dataset);
+
+            try
+            {
+                //5x2 rather than 3x2
+                Int32[,] value = {{ 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }};
+                dataset.SetData(value);
+                Assert.Fail("Exception was expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOf<Hdf5ArraySizeMismatchException>(ex);
+            }
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DArraySizeMismatch2()
+        {
+            string filename = GetFilename("set2darraysizemismatch2.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 5 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
+            Assert.IsNotNull(dataset);
+
+            try
+            {
+                //Only 3x4
+                Int32[,] value = { { 1, 2, 3 }, { 4, 5, 6, }, { 7, 8, 9, }, { 10, 11, 12, } };
+                dataset.SetData(value);
+                Assert.Fail("Exception was expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOf<Hdf5ArraySizeMismatchException>(ex);
+            }
+
+            file.Close();
+        }
+
+        [Test]
+        public void SetArrayDimensionMismatch1()
+        {
+            string filename = GetFilename("setarraydimensionmismatch1.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
+            properties.Add(property);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
+            Assert.IsNotNull(dataset);
+
+            try
+            {
+                //2 dimensions sent, only one expected
+                Int32[,] value = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
+                dataset.SetData(value);
+                Assert.Fail("Exception was expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOf<Hdf5ArrayDimensionsMismatchException>(ex);
+            }
+
+            file.Close();
+        }
+
+        [Test]
+        public void SetArrayDimensionMismatch2()
+        {
+            string filename = GetFilename("setarraydimensionmismatch2.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 5 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
+            Assert.IsNotNull(dataset);
+
+            try
+            {
+                //1 dimensions sent, 2 expected
+                Int32[] value = {  1, 2, 3, 4, 5 } ;
+                dataset.SetData(value);
+                Assert.Fail("Exception was expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOf<Hdf5ArrayDimensionsMismatchException>(ex);
+            }
+
+            file.Close();
+        }
+
+        [Test]
         public void SetInt8()
         {
             string filename = GetFilename("setint8.h5");
@@ -205,7 +327,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, properties);
             Assert.IsNotNull(dataset);
 
             SByte[] value = { SByte.MinValue, -1, 0, 1, SByte.MaxValue };
@@ -231,7 +353,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int16, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int16, properties);
             Assert.IsNotNull(dataset);
 
             Int16[] value = { Int16.MinValue, -1, 0, 1, Int16.MaxValue };
@@ -257,7 +379,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int32, properties);
             Assert.IsNotNull(dataset);
 
             Int32[] value = { Int32.MinValue, -1, 0, 1, Int32.MaxValue };
@@ -283,7 +405,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int64, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int64, properties);
             Assert.IsNotNull(dataset);
 
             Int64[] value = { Int64.MinValue, -1, 0, 1, Int64.MaxValue };
@@ -309,7 +431,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt8, properties);
             Assert.IsNotNull(dataset);
 
             Byte[] value = { Byte.MinValue, 1, 2, 3, Byte.MaxValue };
@@ -335,7 +457,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt16, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt16, properties);
             Assert.IsNotNull(dataset);
 
             UInt16[] value = { UInt16.MinValue, 1, 2, 3, UInt16.MaxValue };
@@ -361,7 +483,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt32, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt32, properties);
             Assert.IsNotNull(dataset);
 
             UInt32[] value = { UInt32.MinValue, 1, 2, 3, UInt32.MaxValue };
@@ -387,7 +509,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt64, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt64, properties);
             Assert.IsNotNull(dataset);
 
             UInt64[] value = { UInt64.MinValue, 1, 2, 3, UInt64.MaxValue };
@@ -413,7 +535,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Single, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Single, properties);
             Assert.IsNotNull(dataset);
 
             Single[] value = { Single.MinValue, -1.1f, 0.0f, -1.3f, Single.MaxValue };
@@ -439,7 +561,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 5 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Double, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Double, properties);
             Assert.IsNotNull(dataset);
 
             Double[] value = { Double.MinValue, -1.1d, 0.0d, -1.3d, Double.MaxValue };
@@ -454,62 +576,7 @@ namespace CSharpHDF5Tests.Objects
             file.Close();
         }
 
-        //[Test]
-        //public void ReadDataset1DInt8()
-        //{
-        //    string fileName = @"c:\temp\test.h5";
-
-        //    Hdf5File file = new Hdf5File(fileName);
-
-        //    Hdf5Dataset dataset = file.Groups[0].Groups[0].Datasets[1];
-
-        //    Array array = dataset.GetData();
-
-        //    file.Close();
-        //}
-
-        //[Test]
-        //public void ReadDataset2DInt8()
-        //{
-        //    string fileName = @"c:\temp\test.h5";
-
-        //    Hdf5File file = new Hdf5File(fileName);
-
-        //    Hdf5Dataset dataset = file.Groups[0].Groups[0].Datasets[7];
-
-        //    Array array = dataset.GetData();
-
-        //    file.Close();
-        //}
-
-
-        //[Test]
-        //public void ReadDataset2DInt16()
-        //{
-        //    string fileName = @"c:\temp\test.h5";
-
-        //    Hdf5File file = new Hdf5File(fileName);
-
-        //    Hdf5Dataset dataset = file.Groups[0].Groups[0].Datasets[12];
-
-        //    Array array = dataset.GetData();
-
-        //    file.Close();
-        //}
-
-        //[Test]
-        //public void ReadDataset1DSingle()
-        //{
-        //    string fileName = @"c:\temp\test.h5";
-
-        //    Hdf5File file = new Hdf5File(fileName);
-
-        //    Hdf5Dataset dataset = file.Groups[0].Groups[0].Datasets[13];
-
-        //    Array array = dataset.GetData();
-
-        //    file.Close();
-        //}
+  
 
     }
 }

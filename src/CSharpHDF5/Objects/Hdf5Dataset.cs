@@ -72,7 +72,19 @@ namespace CSharpHDF5.Objects
 
         public void SetData<T>(T[,] _array)
         {
-            
+            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum<T>();
+
+            if (_array == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!internalType.Equals(DataType.Type))
+            {
+                throw new Hdf5TypeMismatchException();
+            }
+
+            DatasetHelper.Write2DArray<T>(this, _array);
         }
 
         private readonly Hdf5Attributes m_Attributes;

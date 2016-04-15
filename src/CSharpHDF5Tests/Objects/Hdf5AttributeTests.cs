@@ -109,7 +109,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty prop = new Hdf5DimensionProperty {CurrentSize = 1};
             dimensionProps.Add(prop);
 
-            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, 1, dimensionProps);
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
             dataset.Attributes.Add("attribute1", "test");
             dataset.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, dataset.Attributes.Count);
@@ -129,7 +129,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty prop = new Hdf5DimensionProperty { CurrentSize = 1 };
             dimensionProps.Add(prop);
 
-            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, 1, dimensionProps);
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
             dataset.Attributes.Add("attribute1", "test");
             dataset.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, dataset.Attributes.Count);
@@ -246,7 +246,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty prop = new Hdf5DimensionProperty { CurrentSize = 1 };
             dimensionProps.Add(prop);
 
-            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, 1, dimensionProps);
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
             dataset.Attributes.Add("attribute1", "test");
             dataset.Attributes.Add("attribute2", 5);
             Assert.AreEqual(2, dataset.Attributes.Count);
