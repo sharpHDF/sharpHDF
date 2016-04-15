@@ -110,6 +110,7 @@ namespace CSharpHDF5Tests.Objects
             Assert.AreEqual("dataset1", dataset.Name);
         }
 
+        [Test]
         public void SetDataNull()
         {
             string filename = GetFilename("setdatatnull.h5");
