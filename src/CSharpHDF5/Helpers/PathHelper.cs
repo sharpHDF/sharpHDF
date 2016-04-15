@@ -3,7 +3,7 @@ using CSharpHDF5.Objects;
 
 namespace CSharpHDF5.Helpers
 {
-    internal static class PathHelper
+    public static class PathHelper
     {
         public static Hdf5Path Append(this Hdf5Path _path, string _childName)
         {
