@@ -214,6 +214,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(SByte.MinValue, array.GetValue(0));
+            Assert.AreEqual(SByte.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -233,6 +236,12 @@ namespace CSharpHDF5Tests.Objects
 
             Int16[] value = { Int16.MinValue, -1, 0, 1, Int16.MaxValue };
             dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(1, array.Rank);
+            Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Int16.MinValue, array.GetValue(0));
+            Assert.AreEqual(Int16.MaxValue, array.GetValue(4));
 
             file.Close();
         }
@@ -254,6 +263,12 @@ namespace CSharpHDF5Tests.Objects
             Int32[] value = { Int32.MinValue, -1, 0, 1, Int32.MaxValue };
             dataset.SetData(value);
 
+            var array = dataset.GetData();
+            Assert.AreEqual(1, array.Rank);
+            Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Int32.MinValue, array.GetValue(0));
+            Assert.AreEqual(Int32.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -273,6 +288,12 @@ namespace CSharpHDF5Tests.Objects
 
             Int64[] value = { Int64.MinValue, -1, 0, 1, Int64.MaxValue };
             dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(1, array.Rank);
+            Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Int64.MinValue, array.GetValue(0));
+            Assert.AreEqual(Int64.MaxValue, array.GetValue(4));
 
             file.Close();
         }
@@ -297,6 +318,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Byte.MinValue, array.GetValue(0));
+            Assert.AreEqual(Byte.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -320,6 +344,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(UInt16.MinValue, array.GetValue(0));
+            Assert.AreEqual(UInt16.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -343,6 +370,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(UInt32.MinValue, array.GetValue(0));
+            Assert.AreEqual(UInt32.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -366,6 +396,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(UInt64.MinValue, array.GetValue(0));
+            Assert.AreEqual(UInt64.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -389,6 +422,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Single.MinValue, array.GetValue(0));
+            Assert.AreEqual(Single.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 
@@ -412,6 +448,9 @@ namespace CSharpHDF5Tests.Objects
             var array = dataset.GetData();
             Assert.AreEqual(1, array.Rank);
             Assert.AreEqual(5, array.GetLength(0));
+            Assert.AreEqual(Double.MinValue, array.GetValue(0));
+            Assert.AreEqual(Double.MaxValue, array.GetValue(4));
+
             file.Close();
         }
 

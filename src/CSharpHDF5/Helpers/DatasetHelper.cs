@@ -108,17 +108,17 @@ namespace CSharpHDF5.Helpers
 
             if (_dataset.DataType.Type == Hdf5DataTypes.UInt16)
             {
-                return Read1DArray<byte>(_datasetIdentifer, _dataset);
+                return Read1DArray<UInt16>(_datasetIdentifer, _dataset);
             }
 
             if (_dataset.DataType.Type == Hdf5DataTypes.UInt32)
             {
-                return Read1DArray<byte>(_datasetIdentifer, _dataset);
+                return Read1DArray<UInt32>(_datasetIdentifer, _dataset);
             }
 
             if (_dataset.DataType.Type == Hdf5DataTypes.UInt64)
             {
-                return Read1DArray<byte>(_datasetIdentifer, _dataset);
+                return Read1DArray<UInt64>(_datasetIdentifer, _dataset);
             }
 
             if (_dataset.DataType.Type == Hdf5DataTypes.Single)
@@ -344,7 +344,9 @@ namespace CSharpHDF5.Helpers
                 };
 
                 H5D.close(datasetId.Value);
-            }                        
+            }
+
+            H5T.close(typeId.Value);
 
             return dataset;
         }
