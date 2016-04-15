@@ -170,7 +170,7 @@ namespace CSharpHDF5.Helpers
             Hdf5Attribute attribute = null;
             Hdf5DataType dataTypeObject = null;
 
-            var datatype = TypeHelper.GetDataTypesEnum(_value);
+            var datatype = TypeHelper.GetDataTypesEnum<T>();
             
             if (datatype != Hdf5DataTypes.String)
             {
@@ -237,7 +237,7 @@ namespace CSharpHDF5.Helpers
             if (attributeId.Value > 0)
             {
                 Hdf5DataType type = TypeHelper.GetDataType(attributeId);
-                Hdf5DataTypes enumType = TypeHelper.GetDataTypesEnum(_newValue);
+                Hdf5DataTypes enumType = TypeHelper.GetDataTypesEnum<T>();
 
                 if (type.Type == enumType)
                 {

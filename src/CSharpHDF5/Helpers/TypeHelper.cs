@@ -9,7 +9,6 @@ namespace CSharpHDF5.Helpers
 {
     internal static class TypeHelper
     {
-
         public static Hdf5DataType GetDataTypeByType(Hdf5Identifier _typeId)
         {
             var typeClass = H5T.get_class(_typeId.Value);
@@ -125,6 +124,11 @@ namespace CSharpHDF5.Helpers
             return null;
         }
 
+        /// <summary>
+        /// Returns the native type from HDF5
+        /// </summary>
+        /// <param name="_datatype"></param>
+        /// <returns></returns>
         public static Hdf5Identifier GetNativeType(Hdf5DataTypes _datatype)
         {
             switch (_datatype)
@@ -156,7 +160,7 @@ namespace CSharpHDF5.Helpers
             throw new ArgumentOutOfRangeException("_datatype", "Unknown type");
         }
 
-        public static Hdf5DataTypes GetDataTypesEnum<T>(T _value)
+        public static Hdf5DataTypes GetDataTypesEnum<T>()
         {
             Type t = typeof(T);
 

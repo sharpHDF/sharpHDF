@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CSharpHDF5.Enums;
-using CSharpHDF5.Helpers;
+﻿using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
 
@@ -41,30 +39,6 @@ namespace CSharpHDF5.Objects
         internal void LoadChildObjects()
         {
             GroupHelper.PopulateChildrenObjects(FileId, this);
-        }
-
-        /// <summary>
-        /// Adds a dataset to the root level of the file.
-        /// </summary>
-        /// <param name="_name"></param>
-        /// <param name="_datatype"></param>
-        /// <param name="_numberOfDimensions"></param>
-        /// <param name="_dimensionProperties"></param>
-        /// <returns></returns>
-        public Hdf5Dataset AddDataset(
-            string _name,
-            Hdf5DataTypes _datatype,
-            int _numberOfDimensions,
-            List<Hdf5DimensionProperty> _dimensionProperties)
-        {
-            return DatasetHelper.CreateDatasetAddToDatasets(
-                Datasets,
-                FileId,
-                Path,
-                _name,
-                _datatype,
-                _numberOfDimensions,
-                _dimensionProperties);
         }
     }
 }

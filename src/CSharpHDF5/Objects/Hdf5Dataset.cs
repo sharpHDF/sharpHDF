@@ -1,4 +1,6 @@
 ﻿using System;
+using CSharpHDF5.Enums;
+using CSharpHDF5.Exceptions;
 using CSharpHDF5.Helpers;
 using CSharpHDF5.Interfaces;
 using CSharpHDF5.Structs;
@@ -53,7 +55,18 @@ namespace CSharpHDF5.Objects
         /// <param name="_array"></param>
         public void SetData<T>(T[] _array)
         {
-            
+            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum<T>();
+
+            if (_array == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!internalType.Equals(DataType.Type))
+            {
+                throw new Hdf5TypeMismatchException();
+            }
+
         }
 
         public void SetData<T>(T[,] _array)
