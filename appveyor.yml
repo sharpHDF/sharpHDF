@@ -5,8 +5,8 @@ environment:
     secure: CRRgxp0YT0nwHJ2juNykbOeJVs88vQYh3tmA0gITjcfFOa3PMJ4W0DC8vTjLXHeQ
     
 before_build:
-  - nuget restore src/CSharpHDF5/CSharpHDF5.sln
-  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;C:\\projects\\csharphdf5\\src\\CSharpHDF5\\packages\\HDF.PInvoke.1.8.16.11\\lib\\native\\bin64\\;%PATH%"
+  - nuget restore src/sharpHDF/sharpHDF.sln
+  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;C:\\projects\\sharphdf\\src\\sharpHDF\\packages\\HDF.PInvoke.1.8.16.11\\lib\\native\\bin64\\;%PATH%"
     
 assembly_info:
   patch: true
@@ -28,14 +28,14 @@ platform: x64
 configuration: Debug
   
 build:
-  project: src/CSharpHDF5/CSharpHDF5.sln
+  project: src/sharpHDF/sharpHDF.sln
   verbosity: Minimal 
   publish_nuget: true
  
 after_test: 
-    - c:\projects\csharphdf5\cover.bat
+    - c:\projects\sharphdf\cover.bat
     - pip install codecov
-    - codecov -f "c:\projects\csharphdf5\csharphdf5-coverage.xml" -X gcov
+    - codecov -f "c:\projects\sharphdf\sharphdf-coverage.xml" -X gcov
  
 deploy:
   provider: NuGet

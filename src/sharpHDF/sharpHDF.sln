@@ -3,12 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpHDF5", "CSharpHDF5.csproj", "{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpHDF", "sharpHDF.csproj", "{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpHDF5Tests", "..\CSharpHDF5Tests\CSharpHDF5Tests.csproj", "{5193CC07-C056-4766-91B9-7714C24DE5E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpHDFTests", "..\sharpHDFTests\sharpHDFTests.csproj", "{5193CC07-C056-4766-91B9-7714C24DE5E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9B08E00C-CA5D-411B-ABAE-E0216EAF2ED6}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject

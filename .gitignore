@@ -1,5 +1,5 @@
-src/CSharpHDF5/bin/
-src/CSharpHDF5/obj/
-src/CSharpHDF5/packages/
-src/CSharpHDF5Tests/bin/
-src/CSharpHDF5Tests/obj/
+src/sharpHDF/bin/
+src/sharpHDF/obj/
+src/sharpHDF/packages/
+src/sharpHDFTests/bin/
+src/sharpHDFTests/obj/
