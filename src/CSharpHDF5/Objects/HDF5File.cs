@@ -27,11 +27,14 @@ namespace CSharpHDF5.Objects
 
             if (Id.Value > 0)
             {
+                FileId = Id;
                 Path = new Hdf5Path(".");
 
-                Groups = new ReadonlyList<Hdf5Group>();
-                Datasets = new ReadonlyList<Hdf5Dataset>();
-                m_Attributes = AttributeHelper.GetAttributes(this);
+                Groups = new Hdf5Groups(this);
+                Datasets = new Hdf5Datasets(this);
+
+                Attributes = new Hdf5Attributes(this);
+                AttributeHelper.LoadAttributes(Attributes);
 
                 GroupHelper.PopulateChildrenObjects(Id, this);
             }
@@ -68,40 +71,20 @@ namespace CSharpHDF5.Objects
             Id = 0.ToId();
         }
 
-        private readonly ReadonlyList<Hdf5Attribute> m_Attributes; 
-
         /// <summary>
         /// List of attributes that are attached to this object
         /// </summary>
-        public ReadonlyList<Hdf5Attribute> Attributes
-        {
-            get
-            {
-                return m_Attributes;
-            }
-        }
-
-        public Hdf5Attribute AddAttribute<T>(string _name, T _value)
-        {
-            return AttributeHelper.CreateAttributeAddToList(Id, m_Attributes, _name, _value);
-        }
-
-        public void DeleteAttribute(Hdf5Attribute _attribute)
-        {
-            AttributeHelper.DeleteAttribute(Id, _attribute.Name);
-
-            m_Attributes.Remove(_attribute);
-        }
+        public Hdf5Attributes Attributes {get; private set; }
 
         /// <summary>
         /// List of the groups that are contained at the top level of the file
         /// </summary>
-        public ReadonlyList<Hdf5Group> Groups { get; internal set; }
+        public Hdf5Groups Groups { get; internal set; }
 
         /// <summary>
         /// List of the datasets that are contained at the top level of the file
         /// </summary>
-        public ReadonlyList<Hdf5Dataset> Datasets { get; internal set; } 
+        public Hdf5Datasets Datasets { get; internal set; } 
 
         /// <summary>
         /// Disposes of object references in the file
@@ -112,40 +95,6 @@ namespace CSharpHDF5.Objects
             {
                 Close();
             }            
-        }
-
-        /// <summary>
-        /// Adds a group to the root level of the file.
-        /// </summary>
-        /// <param name="_name"></param>
-        /// <returns></returns>
-        public Hdf5Group AddGroup(string _name)
-        {
-            return GroupHelper.CreateGroupAddToList(Groups, Id, Path, _name);
-        }
-
-        /// <summary>
-        /// Adds a dataset to the root level of the file.
-        /// </summary>
-        /// <param name="_name"></param>
-        /// <param name="_datatype"></param>
-        /// <param name="_numberOfDimensions"></param>
-        /// <param name="_dimensionProperties"></param>
-        /// <returns></returns>
-        public Hdf5Dataset AddDataset(
-            string _name,
-            Hdf5DataTypes _datatype,
-            int _numberOfDimensions,
-            List<Hdf5DimensionProperty> _dimensionProperties)
-        {
-            return DatasetHelper.CreateDatasetAddToDatasets(
-                Datasets, 
-                Id, 
-                Path, 
-                _name, 
-                _datatype, 
-                _numberOfDimensions,
-                _dimensionProperties);
         }
     }
 }

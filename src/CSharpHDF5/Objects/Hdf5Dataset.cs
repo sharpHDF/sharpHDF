@@ -11,13 +11,16 @@ namespace CSharpHDF5.Objects
     /// </summary>
     public class Hdf5Dataset : AbstractHdf5Object, IHasAttributes
     {
-        internal Hdf5Dataset(Hdf5Identifier _id, string _path)
+        internal Hdf5Dataset(Hdf5Identifier _fileId, Hdf5Identifier _id, string _path)
         {
+            FileId = _fileId;
             Id = _id;
 
             Path = new Hdf5Path(_path);
             Name = Path.Name;
-            m_Attributes = AttributeHelper.GetAttributes(this);
+
+            m_Attributes = new Hdf5Attributes(this);
+            AttributeHelper.LoadAttributes(m_Attributes);
         }
 
         /// <summary>
@@ -53,42 +56,16 @@ namespace CSharpHDF5.Objects
             
         }
 
-        private readonly ReadonlyList<Hdf5Attribute> m_Attributes;
+        private readonly Hdf5Attributes m_Attributes;
 
         /// <summary>
         /// List of attributes that are attached to this object
         /// </summary>
-        public ReadonlyList<Hdf5Attribute> Attributes
+        public Hdf5Attributes Attributes
         {
             get
             {
                 return m_Attributes;
-            }
-        }
-
-        public Hdf5Attribute AddAttribute<T>(string _name, T _value)
-        {
-            Hdf5Attribute attribute = null;
-
-            var id = H5O.open(FileId.Value, Path.FullPath);
-            if (id > 0)
-            {
-                attribute = AttributeHelper.CreateAttributeAddToList(id.ToId(), m_Attributes, _name, _value);
-                H5O.close(id);
-            }
-
-            return attribute;
-        }
-
-        public void DeleteAttribute(Hdf5Attribute _attribute)
-        {
-            var id = H5O.open(FileId.Value, Path.FullPath).ToId();
-            if (id.Value > 0)
-            {
-                AttributeHelper.DeleteAttribute(id, _attribute.Name);
-
-                m_Attributes.Remove(_attribute);
-                H5O.close(id.Value);
             }
         }
     }

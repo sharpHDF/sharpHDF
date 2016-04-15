@@ -23,9 +23,9 @@ namespace CSharpHDF5.Helpers
             Hdf5DataType datatype = TypeHelper.GetDataType(_datasetId);
             Hdf5Dataspace dataspace = DataspaceHelper.GetDataspace(_datasetId);
 
-            Hdf5Dataset dataset = new Hdf5Dataset(_datasetId, _fullPath)
+            Hdf5Dataset dataset = new Hdf5Dataset(_fileId, _datasetId, _fullPath)
             {
-                FileId = _fileId,
+                
                 Dataspace = dataspace,
                 DataType = datatype
             };
@@ -309,9 +309,8 @@ namespace CSharpHDF5.Helpers
 
             if (datasetId.Value > 0)
             {
-                dataset = new Hdf5Dataset(datasetId, path.FullPath)
+                dataset = new Hdf5Dataset(_fileId, datasetId, path.FullPath)
                 {
-                    FileId = _fileId,
                     DataType = TypeHelper.GetDataType(datasetId),
                     Dataspace = DataspaceHelper.GetDataspace(datasetId)
                 };

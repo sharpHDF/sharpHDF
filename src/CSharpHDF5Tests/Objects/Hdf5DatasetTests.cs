@@ -33,7 +33,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty {CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.AddDataset("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(1, file.Datasets.Count);
 
@@ -51,7 +51,7 @@ namespace CSharpHDF5Tests.Objects
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
             properties.Add(property);
 
-            Hdf5Dataset dataset = file.AddDataset("dataset1", Hdf5DataTypes.Int8, 1, properties);
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Int8, 1, properties);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(1, file.Datasets.Count);
             file.Close();
@@ -71,7 +71,7 @@ namespace CSharpHDF5Tests.Objects
 
             Hdf5File file = Hdf5File.CreateFile(filename);
 
-            Hdf5Group group = file.AddGroup("group1");
+            Hdf5Group group = file.Groups.Add("group1");
 
             List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };
@@ -92,7 +92,7 @@ namespace CSharpHDF5Tests.Objects
 
             Hdf5File file = Hdf5File.CreateFile(filename);
 
-            Hdf5Group group = file.AddGroup("group1");
+            Hdf5Group group = file.Groups.Add("group1");
 
             List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
             Hdf5DimensionProperty property = new Hdf5DimensionProperty { CurrentSize = 100 };

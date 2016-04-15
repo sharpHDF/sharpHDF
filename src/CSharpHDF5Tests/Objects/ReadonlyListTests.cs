@@ -21,11 +21,11 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("contains.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
-            Hdf5Group group2 = file.AddGroup("group2");
-            Hdf5Group group3 = file.AddGroup("group3");
-            Hdf5Group group4 = file.AddGroup("group4");
-            Hdf5Group group5 = file.AddGroup("group5");
+            Hdf5Group group1 = file.Groups.Add("group1");
+            Hdf5Group group2 = file.Groups.Add("group2");
+            Hdf5Group group3 = file.Groups.Add("group3");
+            Hdf5Group group4 = file.Groups.Add("group4");
+            Hdf5Group group5 = file.Groups.Add("group5");
 
             Assert.IsTrue(file.Groups.Contains(group1));
             Assert.IsTrue(file.Groups.Contains(group2));
@@ -40,11 +40,11 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("copyto.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
-            Hdf5Group group2 = file.AddGroup("group2");
-            Hdf5Group group3 = file.AddGroup("group3");
-            Hdf5Group group4 = file.AddGroup("group4");
-            Hdf5Group group5 = file.AddGroup("group5");
+            Hdf5Group group1 = file.Groups.Add("group1");
+            Hdf5Group group2 = file.Groups.Add("group2");
+            Hdf5Group group3 = file.Groups.Add("group3");
+            Hdf5Group group4 = file.Groups.Add("group4");
+            Hdf5Group group5 = file.Groups.Add("group5");
 
             Hdf5Group[] groups = new Hdf5Group[5];
             file.Groups.CopyTo(groups, 0);
@@ -56,11 +56,11 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("getenumerator.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
-            Hdf5Group group2 = file.AddGroup("group2");
-            Hdf5Group group3 = file.AddGroup("group3");
-            Hdf5Group group4 = file.AddGroup("group4");
-            Hdf5Group group5 = file.AddGroup("group5");
+            Hdf5Group group1 = file.Groups.Add("group1");
+            Hdf5Group group2 = file.Groups.Add("group2");
+            Hdf5Group group3 = file.Groups.Add("group3");
+            Hdf5Group group4 = file.Groups.Add("group4");
+            Hdf5Group group5 = file.Groups.Add("group5");
 
             var groups = file.Groups;
             var test = groups as IEnumerable;

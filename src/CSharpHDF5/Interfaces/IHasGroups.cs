@@ -4,8 +4,6 @@ namespace CSharpHDF5.Interfaces
 {
     public interface IHasGroups
     {
-        ReadonlyList<Hdf5Group> Groups { get; }
-
-        Hdf5Group AddGroup(string _name);
+        Hdf5Groups Groups { get; }
     }
 }

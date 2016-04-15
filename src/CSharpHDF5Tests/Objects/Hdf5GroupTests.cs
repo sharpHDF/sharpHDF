@@ -21,7 +21,7 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("creategroup.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group = file.AddGroup("group1");
+            Hdf5Group group = file.Groups.Add("group1");
 
             Assert.IsNotNull(group);
             Assert.AreEqual(1, file.Groups.Count);
@@ -35,7 +35,7 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("opengroup.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group = file.AddGroup("group1");
+            Hdf5Group group = file.Groups.Add("group1");
 
             Assert.IsNotNull(group);
             Assert.AreEqual(1, file.Groups.Count);
@@ -54,12 +54,12 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("creategroupingroup.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
+            Hdf5Group group1 = file.Groups.Add("group1");
 
             Assert.IsNotNull(group1);
             Assert.AreEqual(1, file.Groups.Count);
 
-            Hdf5Group group2 = group1.AddGroup("group2");
+            Hdf5Group group2 = group1.Groups.Add("group2");
             Assert.IsNotNull(group2);
             Assert.AreEqual(1, file.Groups.Count);
             Assert.AreEqual(1, group1.Groups.Count);
@@ -73,12 +73,12 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("opengroupingroup.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
+            Hdf5Group group1 = file.Groups.Add("group1");
 
             Assert.IsNotNull(group1);
             Assert.AreEqual(1, file.Groups.Count);
 
-            Hdf5Group group2 = group1.AddGroup("group2");
+            Hdf5Group group2 = group1.Groups.Add("group2");
             Assert.AreEqual(1, file.Groups.Count);
             Assert.AreEqual(1, group1.Groups.Count);
 
@@ -100,11 +100,11 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("deletegroup.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
-            Hdf5Group group2 = file.AddGroup("group2");
-            Hdf5Group group3 = file.AddGroup("group3");
-            Hdf5Group group4 = file.AddGroup("group4");
-            Hdf5Group group5 = file.AddGroup("group5");
+            Hdf5Group group1 = file.Groups.Add("group1");
+            Hdf5Group group2 = file.Groups.Add("group2");
+            Hdf5Group group3 = file.Groups.Add("group3");
+            Hdf5Group group4 = file.Groups.Add("group4");
+            Hdf5Group group5 = file.Groups.Add("group5");
 
             Assert.AreEqual(5, file.Groups.Count);
 
@@ -117,11 +117,11 @@ namespace CSharpHDF5Tests.Objects
             string fileName = GetFilename("loopthroughgroups.h5");
 
             Hdf5File file = Hdf5File.CreateFile(fileName);
-            Hdf5Group group1 = file.AddGroup("group1");
-            Hdf5Group group2 = file.AddGroup("group2");
-            Hdf5Group group3 = file.AddGroup("group3");
-            Hdf5Group group4 = file.AddGroup("group4");
-            Hdf5Group group5 = file.AddGroup("group5");
+            Hdf5Group group1 = file.Groups.Add("group1");
+            Hdf5Group group2 = file.Groups.Add("group2");
+            Hdf5Group group3 = file.Groups.Add("group3");
+            Hdf5Group group4 = file.Groups.Add("group4");
+            Hdf5Group group5 = file.Groups.Add("group5");
 
             Assert.AreEqual(5, file.Groups.Count);
 

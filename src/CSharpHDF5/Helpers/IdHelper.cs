@@ -11,7 +11,7 @@ namespace CSharpHDF5.Helpers
         public static Hdf5Identifier ToId(this Int32 _value)
 #endif
         {
-            var id = new Hdf5Identifier {Value = _value};
+            var id = new Hdf5Identifier(_value);
             return id;
         }
     }

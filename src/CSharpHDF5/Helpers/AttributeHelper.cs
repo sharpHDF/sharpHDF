@@ -10,14 +10,14 @@ namespace CSharpHDF5.Helpers
 {
     internal static class AttributeHelper
     {
-        public static ReadonlyList<Hdf5Attribute> GetAttributes(
-            AbstractHdf5Object _object)
+        public static void LoadAttributes(
+            Hdf5Attributes _attributes)
         {
             ulong n = 0;
 
-            ReadonlyList<Hdf5Attribute> attributes = new ReadonlyList<Hdf5Attribute>();
+            AbstractHdf5Object obj =_attributes.ParentObject;
 
-            int id = H5A.iterate(_object.Id.Value, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref n,
+            int id = H5A.iterate(obj.Id.Value, H5.index_t.NAME, H5.iter_order_t.NATIVE, ref n,
                 delegate(int _id, IntPtr _namePtr, ref H5A.info_t _ainfo, IntPtr _data)
                 {
                     string attributeName = Marshal.PtrToStringAnsi(_namePtr);
@@ -27,22 +27,22 @@ namespace CSharpHDF5.Helpers
                     {
                         var attributeTypeId = H5A.get_type(attributeId.Value).ToId();
                         var type = TypeHelper.GetDataTypeByType(attributeTypeId);
-                     
+
                         if (attributeTypeId.Value > 0)
                         {
                             Hdf5Attribute attribute = null;
                             if (type.NativeType.Value == H5T.C_S1)
                             {
-                                attribute = GetStringAttribute(_object.Id, attributeName);
+                                attribute = GetStringAttribute(obj.Id, attributeName);
                             }
                             else
                             {
                                 attribute = GetAttribute(attributeId, attributeName, type);
-                            }                                
+                            }
 
                             if (attribute != null)
                             {
-                                attributes.Add(attribute);
+                                _attributes.Add(attribute);
                             }
 
                             H5T.close(attributeTypeId.Value);
@@ -53,8 +53,6 @@ namespace CSharpHDF5.Helpers
 
                     return 0;
                 }, new IntPtr());
-
-            return attributes;
         }
 
         /// <summary>
