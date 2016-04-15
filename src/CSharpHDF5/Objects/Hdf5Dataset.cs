@@ -51,7 +51,12 @@ namespace CSharpHDF5.Objects
         /// Saves an array of data to the dataset
         /// </summary>
         /// <param name="_array"></param>
-        public void SetData(Array _array)
+        public void SetData<T>(T[] _array)
+        {
+            
+        }
+
+        public void SetData<T>(T[,] _array)
         {
             
         }

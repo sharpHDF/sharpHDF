@@ -11,35 +11,6 @@ namespace CSharpHDF5.Helpers
 {
     internal static class GroupHelper
     {
-        public static int GetCount(int _identifier)
-        {
-            ulong pos = 0;
-            int id = 0;
-            bool done = false;
-
-            int count = 0;
-
-            do
-            {
-                H5G.info_t info = new H5G.info_t();
-                string groupName = ".";
-
-                id = H5G.get_info_by_idx(_identifier, groupName, H5.index_t.NAME, H5.iter_order_t.NATIVE, pos, ref info);
-
-                if (id > 0)
-                {
-                    count ++;
-                }
-                else
-                {
-                    done = true;
-                }
-
-            } while (!done);
-
-            return count;
-        }
-
         public static void PopulateChildrenObjects<T>(Hdf5Identifier _fileId, T _parentObject)  where T : AbstractHdf5Object
         {
             ulong pos = 0;
@@ -100,6 +71,7 @@ namespace CSharpHDF5.Helpers
         public static object GetObject(Hdf5Identifier _fileId, AbstractHdf5Object _parent, string _objectName)
         {
             Hdf5Path combinedPath = _parent.Path.Append(_objectName);
+            object output = null;
 
             if (combinedPath != null)
             {
@@ -113,7 +85,7 @@ namespace CSharpHDF5.Helpers
                 {
                     if (gInfo.type == H5O.type_t.DATASET)
                     {
-                        return DatasetHelper.LoadDataset(_fileId, id, fullPath);
+                        output = DatasetHelper.LoadDataset(_fileId, id, fullPath);
                     }
 
                     if (gInfo.type == H5O.type_t.GROUP)
@@ -121,14 +93,14 @@ namespace CSharpHDF5.Helpers
                         Hdf5Group group = new Hdf5Group(_fileId, id, fullPath);
                         group.FileId = _fileId;
                         group.LoadChildObjects();
-                        return group;
+                        output = group;
                     }
 
                     H5O.close(id.Value);
                 }
             }
 
-            return null;
+            return output;
         }
 
         public static Hdf5Group CreateGroupAddToList(
