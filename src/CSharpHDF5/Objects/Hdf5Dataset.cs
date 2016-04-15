@@ -67,6 +67,7 @@ namespace CSharpHDF5.Objects
                 throw new Hdf5TypeMismatchException();
             }
 
+            DatasetHelper.Write1DArray<T>(this, _array);
         }
 
         public void SetData<T>(T[,] _array)

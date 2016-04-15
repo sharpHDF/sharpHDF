@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using CSharpHDF5.Enums;
+using CSharpHDF5.Exceptions;
 using CSharpHDF5.Objects;
 using CSharpHDF5.Structs;
 using HDF.PInvoke;
@@ -216,6 +217,33 @@ namespace CSharpHDF5.Helpers
             H5T.close(dataType.Value);
 
             return dataArray;
+        }
+
+        public static void Write1DArray<T>(Hdf5Dataset _dataset, T[] _array)
+        {            
+            if ((ulong)_array.Length != _dataset.Dataspace.DimensionProperties[0].CurrentSize)
+            {
+                throw new Hdf5ArraySizeMismatchException();
+            }
+
+            var datasetId = H5O.open(_dataset.FileId.Value, _dataset.Path.FullPath).ToId();
+
+            GCHandle arrayHandle = GCHandle.Alloc(_array, GCHandleType.Pinned);
+
+            var typeId = H5T.copy(_dataset.DataType.NativeType.Value).ToId();
+
+            int result = H5D.write(
+                datasetId.Value,
+                typeId.Value,
+                H5S.ALL,
+                H5S.ALL,
+                H5P.DEFAULT,
+                arrayHandle.AddrOfPinnedObject());
+
+            arrayHandle.Free();
+
+            H5T.close(typeId.Value);
+            H5O.close(datasetId.Value);
         }
 
         public static T[,] Read2DArray<T>(Hdf5Identifier _datasetIdentifer, Hdf5Dataset _dataset)
