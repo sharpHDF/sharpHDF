@@ -717,5 +717,203 @@ namespace sharpHDF.Library.Tests.Objects
 
             file.Close();
         }
+
+        [Test]
+        public void Set2DuInt8()
+        {
+            string filename = GetFilename("set2duint8.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt8, properties);
+            Assert.IsNotNull(dataset);
+
+            byte[,] value = { { byte.MinValue, 0, byte.MaxValue }, { byte.MaxValue, 0, byte.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(byte.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(byte.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(byte.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(byte.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DuInt16()
+        {
+            string filename = GetFilename("set2duint16.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt16, properties);
+            Assert.IsNotNull(dataset);
+
+            UInt16[,] value = { { UInt16.MinValue, 0, UInt16.MaxValue }, { UInt16.MaxValue, 0, UInt16.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(UInt16.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(UInt16.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(UInt16.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(UInt16.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DuInt32()
+        {
+            string filename = GetFilename("set2duint32.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt32, properties);
+            Assert.IsNotNull(dataset);
+
+            UInt32[,] value = { { UInt32.MinValue, 0, UInt32.MaxValue }, { UInt32.MaxValue, 0, UInt32.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(UInt32.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(UInt32.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(UInt32.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(UInt32.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DuInt64()
+        {
+            string filename = GetFilename("set2duint64.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.UInt64, properties);
+            Assert.IsNotNull(dataset);
+
+            UInt64[,] value = { { UInt64.MinValue, 0, UInt64.MaxValue }, { UInt64.MaxValue, 0, UInt64.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(UInt64.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(UInt64.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(UInt64.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(UInt64.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DSingle()
+        {
+            string filename = GetFilename("set2dsingle.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Single, properties);
+            Assert.IsNotNull(dataset);
+
+            float[,] value = { { float.MinValue, 0, float.MaxValue }, { float.MaxValue, 0, float.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(float.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(float.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(float.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(float.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
+
+        [Test]
+        public void Set2DDouble()
+        {
+            string filename = GetFilename("set2ddouble.h5");
+
+            Hdf5File file = Hdf5File.Create(filename);
+
+            List<Hdf5DimensionProperty> properties = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty property1 = new Hdf5DimensionProperty { CurrentSize = 2 };
+            properties.Add(property1);
+            Hdf5DimensionProperty property2 = new Hdf5DimensionProperty { CurrentSize = 3 };
+            properties.Add(property2);
+
+            Hdf5Dataset dataset = file.Datasets.Add("dataset1", Hdf5DataTypes.Double, properties);
+            Assert.IsNotNull(dataset);
+
+            double[,] value = { { double.MinValue, 0, double.MaxValue }, { double.MaxValue, 0, double.MinValue } };
+            dataset.SetData(value);
+
+            var array = dataset.GetData();
+            Assert.AreEqual(2, array.Rank);
+            Assert.AreEqual(2, array.GetLength(0));
+            Assert.AreEqual(3, array.GetLength(1));
+            Assert.AreEqual(double.MinValue, array.GetValue(0, 0));
+            Assert.AreEqual(0, array.GetValue(0, 1));
+            Assert.AreEqual(double.MaxValue, array.GetValue(0, 2));
+            Assert.AreEqual(double.MaxValue, array.GetValue(1, 0));
+            Assert.AreEqual(0, array.GetValue(1, 1));
+            Assert.AreEqual(double.MinValue, array.GetValue(1, 2));
+
+            file.Close();
+        }
     }
 }
