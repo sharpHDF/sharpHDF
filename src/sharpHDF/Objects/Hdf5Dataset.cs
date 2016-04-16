@@ -1,12 +1,11 @@
 ﻿using System;
-using CSharpHDF5.Enums;
-using CSharpHDF5.Exceptions;
-using CSharpHDF5.Helpers;
-using CSharpHDF5.Interfaces;
-using CSharpHDF5.Structs;
-using HDF.PInvoke;
+using sharpHDF.Library.Enums;
+using sharpHDF.Library.Exceptions;
+using sharpHDF.Library.Helpers;
+using sharpHDF.Library.Interfaces;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Contains information around a HDF5 Dataset

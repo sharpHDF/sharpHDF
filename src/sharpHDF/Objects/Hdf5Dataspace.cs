@@ -1,6 +1,6 @@
-﻿using CSharpHDF5.Structs;
+﻿using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Information regarding the shape of a HDF5 Dataset

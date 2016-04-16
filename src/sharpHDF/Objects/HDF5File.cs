@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using CSharpHDF5.Exceptions;
-using CSharpHDF5.Helpers;
-using CSharpHDF5.Interfaces;
-using CSharpHDF5.Structs;
 using HDF.PInvoke;
+using sharpHDF.Library.Exceptions;
+using sharpHDF.Library.Helpers;
+using sharpHDF.Library.Interfaces;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class Hdf5File : AbstractHdf5Object, IDisposable, IHasGroups, IHasDatasets, IHasAttributes
     {

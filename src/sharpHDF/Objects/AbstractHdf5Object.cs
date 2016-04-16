@@ -1,6 +1,6 @@
-﻿using CSharpHDF5.Structs;
+﻿using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public abstract class AbstractHdf5Object
     {

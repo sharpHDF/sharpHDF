@@ -7,8 +7,8 @@
     <ProjectGuid>{5193CC07-C056-4766-91B9-7714C24DE5E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSharpHDF5Tests</RootNamespace>
-    <AssemblyName>CSharpHDF5Tests</AssemblyName>
+    <RootNamespace>sharpHDF.Library.Tests</RootNamespace>
+    <AssemblyName>sharpHDFTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\sharpHDF\</SolutionDir>

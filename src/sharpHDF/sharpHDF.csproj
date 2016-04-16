@@ -7,8 +7,8 @@
     <ProjectGuid>{82178FAC-C9FB-4F7D-A6BC-380AB1B6CEF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSharpHDF5</RootNamespace>
-    <AssemblyName>CSharpHDF5</AssemblyName>
+    <RootNamespace>sharpHDF.Library</RootNamespace>
+    <AssemblyName>sharpHDF5</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>

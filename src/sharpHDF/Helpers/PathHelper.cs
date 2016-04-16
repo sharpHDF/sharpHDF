@@ -1,7 +1,7 @@
 ﻿using System;
-using CSharpHDF5.Objects;
+using sharpHDF.Library.Objects;
 
-namespace CSharpHDF5.Helpers
+namespace sharpHDF.Library.Helpers
 {
     public static class PathHelper
     {

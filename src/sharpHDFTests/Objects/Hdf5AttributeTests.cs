@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using CSharpHDF5.Enums;
-using CSharpHDF5.Objects;
 using NUnit.Framework;
+using sharpHDF.Library.Enums;
+using sharpHDF.Library.Objects;
 
-namespace CSharpHDF5Tests.Objects
+namespace sharpHDF.Library.Tests.Objects
 {
     [TestFixture]
     public class Hdf5AttributeTests : BaseTest

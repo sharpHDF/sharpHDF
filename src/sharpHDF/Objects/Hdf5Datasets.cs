@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CSharpHDF5.Enums;
-using CSharpHDF5.Helpers;
+using sharpHDF.Library.Enums;
+using sharpHDF.Library.Helpers;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// 

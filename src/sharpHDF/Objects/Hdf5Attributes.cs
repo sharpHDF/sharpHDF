@@ -1,7 +1,7 @@
-﻿using CSharpHDF5.Helpers;
-using HDF.PInvoke;
+﻿using HDF.PInvoke;
+using sharpHDF.Library.Helpers;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class Hdf5Attributes :  ReadonlyList<Hdf5Attribute>
     {

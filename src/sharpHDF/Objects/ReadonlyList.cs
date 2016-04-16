@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class ReadonlyList<T> : IEnumerable<T>
     {

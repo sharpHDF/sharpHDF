@@ -1,4 +1,4 @@
-﻿namespace CSharpHDF5.Objects
+﻿namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Details on a particular dimension in a dataset.

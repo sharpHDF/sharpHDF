@@ -1,7 +1,7 @@
-﻿using CSharpHDF5.Enums;
-using CSharpHDF5.Structs;
+﻿using sharpHDF.Library.Enums;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class Hdf5DataType 
     {

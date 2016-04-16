@@ -1,8 +1,6 @@
-﻿
-using CSharpHDF5.Helpers;
-using CSharpHDF5.Structs;
+﻿using sharpHDF.Library.Helpers;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class Hdf5Groups : ReadonlyList<Hdf5Group>
     {

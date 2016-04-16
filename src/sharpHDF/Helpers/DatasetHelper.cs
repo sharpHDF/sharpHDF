@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CSharpHDF5.Enums;
-using CSharpHDF5.Exceptions;
-using CSharpHDF5.Objects;
-using CSharpHDF5.Structs;
 using HDF.PInvoke;
+using sharpHDF.Library.Enums;
+using sharpHDF.Library.Exceptions;
+using sharpHDF.Library.Objects;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Helpers
+namespace sharpHDF.Library.Helpers
 {
     internal static class DatasetHelper
     {

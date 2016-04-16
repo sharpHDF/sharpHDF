@@ -1,6 +1,6 @@
-﻿using CSharpHDF5.Objects;
+﻿using sharpHDF.Library.Objects;
 
-namespace CSharpHDF5.Interfaces
+namespace sharpHDF.Library.Interfaces
 {
     public interface IHasGroups
     {

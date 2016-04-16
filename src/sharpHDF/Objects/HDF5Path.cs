@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace CSharpHDF5.Objects
+namespace sharpHDF.Library.Objects
 {
     public class Hdf5Path
     {

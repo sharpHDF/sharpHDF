@@ -1,10 +1,9 @@
 ﻿using System;
-using System.ComponentModel.Design;
-using CSharpHDF5.Exceptions;
-using CSharpHDF5.Objects;
 using NUnit.Framework;
+using sharpHDF.Library.Exceptions;
+using sharpHDF.Library.Objects;
 
-namespace CSharpHDF5Tests.Objects
+namespace sharpHDF.Library.Tests.Objects
 {
     [TestFixture]
     public class Hdf5TypeTests :BaseTest

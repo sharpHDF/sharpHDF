@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CSharpHDF5Tests.Objects
+namespace sharpHDF.Library.Tests.Objects
 {
     public abstract class BaseTest
     {

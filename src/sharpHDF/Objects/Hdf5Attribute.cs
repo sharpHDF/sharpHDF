@@ -1,4 +1,4 @@
-﻿namespace CSharpHDF5.Objects
+﻿namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Contains HDF5 Attribures

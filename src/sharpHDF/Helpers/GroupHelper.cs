@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CSharpHDF5.Interfaces;
-using CSharpHDF5.Objects;
-using CSharpHDF5.Structs;
 using HDF.PInvoke;
+using sharpHDF.Library.Interfaces;
+using sharpHDF.Library.Objects;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Helpers
+namespace sharpHDF.Library.Helpers
 {
     internal static class GroupHelper
     {

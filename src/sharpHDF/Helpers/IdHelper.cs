@@ -1,7 +1,7 @@
 ﻿using System;
-using CSharpHDF5.Structs;
+using sharpHDF.Library.Structs;
 
-namespace CSharpHDF5.Helpers
+namespace sharpHDF.Library.Helpers
 {
     internal static class IdHelper
     {

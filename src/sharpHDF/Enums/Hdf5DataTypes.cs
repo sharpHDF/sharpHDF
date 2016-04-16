@@ -1,4 +1,4 @@
-﻿namespace CSharpHDF5.Enums
+﻿namespace sharpHDF.Library.Enums
 {
     public enum Hdf5DataTypes
     {
