@@ -351,56 +351,61 @@ namespace sharpHDF.Library.Helpers
             if (_dataType.Type == Hdf5DataTypes.Int8)
             {
                 WriteValue(_dataType, _attributeId, (sbyte)_value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.Int16)
             {
                 WriteValue(_dataType, _attributeId, (Int16) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.Int32)
             {
                 WriteValue(_dataType, _attributeId, (Int32)_value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.Int64)
             {
                 WriteValue(_dataType, _attributeId, (Int64) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt8)
             {
                 WriteValue(_dataType, _attributeId, (byte) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt16)
             {
                 WriteValue(_dataType, _attributeId, (UInt16) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt32)
             {
                 WriteValue(_dataType, _attributeId, (UInt32) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.UInt64)
             {
                 WriteValue(_dataType, _attributeId, (UInt64) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.Single)
             {
                 WriteValue(_dataType, _attributeId, (Single) _value);
+                return;
             }
 
             if (_dataType.Type == Hdf5DataTypes.Double)
             {
                 WriteValue(_dataType, _attributeId, (Double) _value);
-            }
-
-            if (_dataType.Type == Hdf5DataTypes.String)
-            {
-                
+                return;
             }
 
             throw new Hdf5UnknownDataType();

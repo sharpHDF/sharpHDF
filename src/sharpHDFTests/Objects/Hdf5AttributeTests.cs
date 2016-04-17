@@ -572,5 +572,108 @@ namespace sharpHDF.Library.Tests.Objects
             var attribute11 = attibutes[10];
             Assert.AreEqual(double.MaxValue, attribute11.Value);
         }
+
+        [Test]
+        public void UpdateAllAttributeTypesOnFile()
+        {
+            string fileName = GetFilename("updateallattributetypesonfile.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+
+            var atta = file.Attributes.Add("attributea", "test");
+            atta.Value = "test2";
+            file.Attributes.Update(atta);
+
+            sbyte b = sbyte.MaxValue;
+            var attb = file.Attributes.Add("attributeb", b);
+            attb.Value = sbyte.MinValue;
+            file.Attributes.Update(attb);
+
+            Int16 c = Int16.MaxValue;
+            var attc = file.Attributes.Add("attributec", c);
+            attc.Value = Int16.MinValue;
+            file.Attributes.Update(attc);
+
+            Int32 d = Int32.MaxValue;
+            var attd = file.Attributes.Add("attributed", d);
+            attd.Value = Int32.MinValue;
+            file.Attributes.Update(attd);
+
+            Int64 e = Int64.MaxValue;
+            var atte = file.Attributes.Add("attributee", e);
+            atte.Value = Int64.MinValue;
+            file.Attributes.Update(atte);
+
+            byte f = Byte.MaxValue;
+            var attf = file.Attributes.Add("attibutef", f);
+            attf.Value = Byte.MinValue;
+            file.Attributes.Update(attf);
+
+            UInt16 g = UInt16.MaxValue;
+            var attg = file.Attributes.Add("attributeg", g);
+            attg.Value = UInt16.MinValue;
+            file.Attributes.Update(attg);
+
+            UInt32 h = UInt32.MaxValue;
+            var atth = file.Attributes.Add("attibuteh", h);
+            atth.Value = UInt32.MinValue;
+            file.Attributes.Update(atth);
+
+            UInt64 i = UInt64.MaxValue;
+            var atti = file.Attributes.Add("attributei", i);
+            atti.Value = UInt64.MinValue;
+            file.Attributes.Update(atti);
+
+            float j = float.MaxValue;
+            var attj = file.Attributes.Add("attibutej", j);
+            attj.Value = float.MinValue;
+            file.Attributes.Update(attj);
+
+            double k = double.MaxValue;
+            var attk = file.Attributes.Add("attributek", k);
+            attk.Value = double.MinValue;
+            file.Attributes.Update(attk);
+
+            Assert.AreEqual(11, file.Attributes.Count);
+
+            file.Close();
+
+            file = new Hdf5File(fileName);
+            var attibutes = file.Attributes;
+            Assert.AreEqual(11, attibutes.Count);
+
+            var attribute1 = attibutes[0];
+            Assert.AreEqual("test2", attribute1.Value);
+
+            var attribute2 = attibutes[1];
+            Assert.AreEqual(sbyte.MinValue, attribute2.Value);
+
+            var attribute3 = attibutes[2];
+            Assert.AreEqual(Int16.MinValue, attribute3.Value);
+
+            var attribute4 = attibutes[3];
+            Assert.AreEqual(Int32.MinValue, attribute4.Value);
+
+            var attribute5 = attibutes[4];
+            Assert.AreEqual(Int64.MinValue, attribute5.Value);
+
+            var attribute6 = attibutes[5];
+            Assert.AreEqual(byte.MinValue, attribute6.Value);
+
+            var attribute7 = attibutes[6];
+            Assert.AreEqual(UInt16.MinValue, attribute7.Value);
+
+            var attribute8 = attibutes[7];
+            Assert.AreEqual(UInt32.MinValue, attribute8.Value);
+
+            var attribute9 = attibutes[8];
+            Assert.AreEqual(UInt64.MinValue, attribute9.Value);
+
+            var attribute10 = attibutes[9];
+            Assert.AreEqual(float.MinValue, attribute10.Value);
+
+            var attribute11 = attibutes[10];
+            Assert.AreEqual(double.MinValue, attribute11.Value);
+        }
     }
 }
