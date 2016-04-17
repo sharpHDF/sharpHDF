@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+using System.Collections.Generic;
 using sharpHDF.Library.Enums;
 using sharpHDF.Library.Helpers;
 

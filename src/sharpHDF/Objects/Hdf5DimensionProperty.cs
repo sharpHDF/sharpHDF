@@ -1,4 +1,9 @@
-﻿namespace sharpHDF.Library.Objects
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Details on a particular dimension in a dataset.

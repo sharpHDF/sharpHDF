@@ -1,4 +1,9 @@
-﻿using NUnit.Framework;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+using NUnit.Framework;
 using sharpHDF.Library.Objects;
 
 namespace sharpHDF.Library.Tests.Objects

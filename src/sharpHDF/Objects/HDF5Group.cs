@@ -1,4 +1,9 @@
-﻿using sharpHDF.Library.Helpers;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+using sharpHDF.Library.Helpers;
 using sharpHDF.Library.Interfaces;
 using sharpHDF.Library.Structs;
 

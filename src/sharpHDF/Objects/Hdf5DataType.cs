@@ -1,4 +1,9 @@
-﻿using sharpHDF.Library.Enums;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+using sharpHDF.Library.Enums;
 using sharpHDF.Library.Structs;
 
 namespace sharpHDF.Library.Objects
