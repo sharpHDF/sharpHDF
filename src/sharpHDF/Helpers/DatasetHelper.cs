@@ -58,26 +58,6 @@ namespace sharpHDF.Library.Helpers
             return null;
         }
 
-        /// <summary>
-        /// This can be used when you know what type you want.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="_dataset"></param>
-        /// <returns></returns>
-        public static Array GetSingleDimensionArray<T>(Hdf5Dataset _dataset)
-        {
-            var id = H5O.open(_dataset.FileId.Value, _dataset.Path.FullPath).ToId();
-
-            if (id.Value > 0)
-            {
-                Array array = Read1DArray<T>(id, _dataset);
-                H5O.close(id.Value);
-                return array;
-            }
-
-            return null;
-        }
-
         private static Array SingleDimension(Hdf5Identifier _datasetIdentifer, Hdf5Dataset _dataset)
         {
             if (_dataset.DataType.Type == Hdf5DataTypes.Int8)
@@ -195,7 +175,7 @@ namespace sharpHDF.Library.Helpers
         /// <param name="_datasetIdentifer"></param>
         /// <param name="_dataset"></param>
         /// <returns></returns>
-        private static T[] Read1DArray<T>(Hdf5Identifier _datasetIdentifer, Hdf5Dataset _dataset)
+        public static T[] Read1DArray<T>(Hdf5Identifier _datasetIdentifer, Hdf5Dataset _dataset)
         {
             T[] dataArray = new T[_dataset.Dataspace.DimensionProperties[0].CurrentSize];
 
