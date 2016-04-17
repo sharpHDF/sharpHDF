@@ -54,7 +54,7 @@ namespace sharpHDF.Library.Objects
         /// <param name="_array"></param>
         public void SetData<T>(T[] _array)
         {
-            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum<T>();
+            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum(typeof(T));
 
             if (_array == null)
             {
@@ -71,7 +71,7 @@ namespace sharpHDF.Library.Objects
 
         public void SetData<T>(T[,] _array)
         {
-            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum<T>();
+            Hdf5DataTypes internalType = TypeHelper.GetDataTypesEnum(typeof(T));
 
             if (_array == null)
             {

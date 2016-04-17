@@ -20,7 +20,7 @@ namespace sharpHDF.Library.Helpers
         /// <returns></returns>
         public static Hdf5Dataset LoadDataset(Hdf5Identifier _fileId, Hdf5Identifier _datasetId, string _fullPath)
         {
-            Hdf5DataType datatype = TypeHelper.GetDataType(_datasetId);
+            Hdf5DataType datatype = TypeHelper.GetDataTypeFromDataset(_datasetId);
             Hdf5Dataspace dataspace = DataspaceHelper.GetDataspace(_datasetId);
 
             Hdf5Dataset dataset = new Hdf5Dataset(_fileId, _datasetId, _fullPath)
@@ -360,7 +360,7 @@ namespace sharpHDF.Library.Helpers
             {
                 dataset = new Hdf5Dataset(_fileId, datasetId, path.FullPath)
                 {
-                    DataType = TypeHelper.GetDataType(datasetId),
+                    DataType = TypeHelper.GetDataTypeFromDataset(datasetId),
                     Dataspace = DataspaceHelper.GetDataspace(datasetId)
                 };
 

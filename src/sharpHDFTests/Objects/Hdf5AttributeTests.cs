@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using sharpHDF.Library.Enums;
+using sharpHDF.Library.Exceptions;
 using sharpHDF.Library.Objects;
 
 namespace sharpHDF.Library.Tests.Objects
@@ -28,6 +29,213 @@ namespace sharpHDF.Library.Tests.Objects
             Assert.AreEqual(2, file.Attributes.Count);
 
             file.Close();
+        }
+
+        [Test]
+        public void CreateAttributeTwiceOnFile()
+        {
+            string fileName = GetFilename("createattributetwiceonfile.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            file.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                file.Attributes.Add("attribute1", "test2");
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5AttributeAlreadyExistException>(ex);
+            }
+        }
+
+        [Test]
+        public void CreateAttributeTwiceOnGroup()
+        {
+            string fileName = GetFilename("createattributetwiceongroup.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("test");
+            group.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                group.Attributes.Add("attribute1", "test2");
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5AttributeAlreadyExistException>(ex);
+            }
+        }
+
+        [Test]
+        public void CreateAttributeTwiceOnDataset()
+        {
+            string fileName = GetFilename("createattributetwiceondataset.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("test");
+            List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty prop = new Hdf5DimensionProperty { CurrentSize = 1 };
+            dimensionProps.Add(prop);
+
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
+
+            dataset.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                dataset.Attributes.Add("attribute1", "test2");
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5AttributeAlreadyExistException>(ex);
+            }
+        }
+
+        [Test]
+        public void UpdateAttributeWithMismatchOnFile()
+        {
+            string fileName = GetFilename("updateattributewithmistmachonfile.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Attribute attribute = file.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                attribute.Value = 5;
+
+                file.Attributes.Update(attribute);
+
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5TypeMismatchException>(ex);
+            }
+        }
+
+        [Test]
+        public void UpdateAttributeWithMismatchOnGroup()
+        {
+            string fileName = GetFilename("updateattributewithmistmachongroup.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("group");
+            Hdf5Attribute attribute = group.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                attribute.Value = 5;
+
+                group.Attributes.Update(attribute);
+
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5TypeMismatchException>(ex);
+            }
+        }
+
+        [Test]
+        public void UpdateAttributeWithMismatchOnDataset()
+        {
+            string fileName = GetFilename("updateattributewithmistmachondataset.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("group");
+
+            List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty prop = new Hdf5DimensionProperty { CurrentSize = 1 };
+            dimensionProps.Add(prop);
+
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
+
+            Hdf5Attribute attribute = dataset.Attributes.Add("attribute1", "test");
+
+            try
+            {
+                attribute.Value = 5;
+
+                dataset.Attributes.Update(attribute);
+
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception ex)
+            {
+                file.Close();
+                Assert.IsInstanceOf<Hdf5TypeMismatchException>(ex);
+            }
+        }
+
+        [Test]
+        public void UpdateStringAttributeOnFile()
+        {
+            string fileName = GetFilename("updatestringattributeonfile.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Attribute attribute = file.Attributes.Add("attribute1", "test");
+
+            attribute.Value = "test2";
+            file.Attributes.Update(attribute);
+            file.Close();
+
+            file = new Hdf5File(fileName);
+            attribute = file.Attributes[0];
+            Assert.AreEqual("test2", attribute.Value);
+        }
+
+        [Test]
+        public void UpdateStringAttributeOnGroup()
+        {
+            string fileName = GetFilename("updatestringattributeongroup.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("group");
+            Hdf5Attribute attribute = group.Attributes.Add("attribute1", "test");
+            attribute.Value = "test2";
+            group.Attributes.Update(attribute);
+            file.Close();
+
+            file = new Hdf5File(fileName);
+            group = file.Groups[0];
+            attribute = group.Attributes[0];
+            Assert.AreEqual("test2", attribute.Value);
+        }
+
+        [Test]
+        public void UpdateStringAttributeOnDataset()
+        {
+            string fileName = GetFilename("updatestringattributeondataset.h5");
+
+            Hdf5File file = Hdf5File.Create(fileName);
+            Hdf5Group group = file.Groups.Add("group");
+
+            List<Hdf5DimensionProperty> dimensionProps = new List<Hdf5DimensionProperty>();
+            Hdf5DimensionProperty prop = new Hdf5DimensionProperty { CurrentSize = 1 };
+            dimensionProps.Add(prop);
+
+            Hdf5Dataset dataset = group.Datasets.Add("dataset1", Hdf5DataTypes.Int32, dimensionProps);
+
+            Hdf5Attribute attribute = dataset.Attributes.Add("attribute1", "test");
+            attribute.Value = "test2";
+            dataset.Attributes.Update(attribute);
+            file.Close();
+
+            file = new Hdf5File(fileName);
+            group = file.Groups[0];
+            dataset = group.Datasets[0];
+            attribute = dataset.Attributes[0];
+            Assert.AreEqual("test2", attribute.Value);
         }
 
         [Test]

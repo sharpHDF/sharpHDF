@@ -112,9 +112,21 @@ namespace sharpHDF.Library.Helpers
         /// </summary>
         /// <param name="_objectId"></param>
         /// <returns></returns>
-        public static Hdf5DataType GetDataType(Hdf5Identifier _objectId)
+        public static Hdf5DataType GetDataTypeFromDataset(Hdf5Identifier _objectId)
         {
             var typeId = H5D.get_type(_objectId.Value).ToId();
+
+            if (typeId.Value > 0)
+            {
+                return GetDataTypeByType(typeId);
+            }
+
+            return null;
+        }
+
+        public static Hdf5DataType GetDataTypeFromAttribute(Hdf5Identifier _objectId)
+        {
+            var typeId = H5A.get_type(_objectId.Value).ToId();
 
             if (typeId.Value > 0)
             {
@@ -160,61 +172,59 @@ namespace sharpHDF.Library.Helpers
             throw new ArgumentOutOfRangeException("_datatype", "Unknown type");
         }
 
-        public static Hdf5DataTypes GetDataTypesEnum<T>()
+        public static Hdf5DataTypes GetDataTypesEnum(Type _t)
         {
-            Type t = typeof(T);
-
-            if (t == typeof(byte))
+            if (_t == typeof(byte))
             {
                 return Hdf5DataTypes.UInt8;
             }
 
-            if (t == typeof (UInt16))
+            if (_t == typeof(UInt16))
             {
-                return Hdf5DataTypes.UInt16;                
+                return Hdf5DataTypes.UInt16;
             }
 
-            if (t == typeof (UInt32))
+            if (_t == typeof(UInt32))
             {
                 return Hdf5DataTypes.UInt32;
             }
 
-            if (t == typeof (UInt64))
+            if (_t == typeof(UInt64))
             {
                 return Hdf5DataTypes.UInt64;
             }
 
-            if (t == typeof (sbyte))
+            if (_t == typeof(sbyte))
             {
                 return Hdf5DataTypes.Int8;
             }
 
-            if (t == typeof (Int16))
+            if (_t == typeof(Int16))
             {
                 return Hdf5DataTypes.Int16;
             }
 
-            if (t == typeof (Int32))
+            if (_t == typeof(Int32))
             {
                 return Hdf5DataTypes.Int32;
             }
 
-            if (t == typeof (Int64))
+            if (_t == typeof(Int64))
             {
                 return Hdf5DataTypes.Int64;
             }
 
-            if (t == typeof (Single))
+            if (_t == typeof(Single))
             {
                 return Hdf5DataTypes.Single;
             }
 
-            if (t == typeof (Double))
+            if (_t == typeof(Double))
             {
                 return Hdf5DataTypes.Double;
             }
 
-            if (t == typeof (string))
+            if (_t == typeof(string))
             {
                 return Hdf5DataTypes.String;
             }

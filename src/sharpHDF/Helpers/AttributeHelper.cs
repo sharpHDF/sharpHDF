@@ -8,8 +8,16 @@ using sharpHDF.Library.Structs;
 
 namespace sharpHDF.Library.Helpers
 {
+    /// <summary>
+    /// Internal functions that work with HDF5 file and support attributes
+    /// </summary>
     internal static class AttributeHelper
     {
+        /// <summary>
+        /// Loads all attributes on an object into the supplied attributes collection.
+        /// Assumes that the object is already open.
+        /// </summary>
+        /// <param name="_attributes"></param>
         public static void LoadAttributes(
             Hdf5Attributes _attributes)
         {
@@ -56,7 +64,8 @@ namespace sharpHDF.Library.Helpers
         }
 
         /// <summary>
-        /// Assumes that parenent object is already open
+        /// Deletes the attribute from the file.  
+        /// Assumes that parent object is already open
         /// </summary>
         /// <param name="_objectId"></param>
         /// <param name="_title"></param>
@@ -65,6 +74,14 @@ namespace sharpHDF.Library.Helpers
             int result = H5A.delete(_objectId.Value, _title);
         }
 
+        /// <summary>
+        /// Reads a non-string attribute
+        /// Assumes the parent object is already open
+        /// </summary>
+        /// <param name="_attributeId"></param>
+        /// <param name="_title"></param>
+        /// <param name="_type"></param>
+        /// <returns></returns>
         public static Hdf5Attribute GetAttribute(Hdf5Identifier _attributeId, string _title, Hdf5DataType _type)
         {
             Object value = ReadValue(_type, _attributeId);
@@ -79,57 +96,54 @@ namespace sharpHDF.Library.Helpers
             return attribute;
         }
 
+        /// <summary>
+        /// Reads a string scalar attribute value.
+        /// Assumes that the parent object is already open.
+        /// </summary>
+        /// <param name="_objectId"></param>
+        /// <param name="_title"></param>
+        /// <returns></returns>
         public static Hdf5Attribute GetStringAttribute(Hdf5Identifier _objectId, string _title)
         {
             int attributeId = 0;
             int typeId = 0;
 
-            try
+            attributeId = H5A.open(_objectId.Value, _title);
+            typeId = H5A.get_type(attributeId);
+            var sizeData = H5T.get_size(typeId);
+            var size = sizeData.ToInt32();
+            byte[] strBuffer = new byte[size];
+
+            var aTypeMem = H5T.get_native_type(typeId, H5T.direction_t.ASCEND);
+            GCHandle pinnedArray = GCHandle.Alloc(strBuffer, GCHandleType.Pinned);
+            H5A.read(attributeId, aTypeMem, pinnedArray.AddrOfPinnedObject());
+            pinnedArray.Free();
+            H5T.close(aTypeMem);
+
+            string value = System.Text.Encoding.ASCII.GetString(strBuffer, 0, strBuffer.Length - 1);
+
+            var attribute = new Hdf5Attribute
             {
-                attributeId = H5A.open(_objectId.Value, _title);
-                typeId = H5A.get_type(attributeId);
-                var sizeData = H5T.get_size(typeId);
-                var size = sizeData.ToInt32();
-                byte[] strBuffer = new byte[size];
+                Id = attributeId.ToId(),
+                Name = _title,
+                Value = value
+            };
 
-                var aTypeMem = H5T.get_native_type(typeId, H5T.direction_t.ASCEND);
-                GCHandle pinnedArray = GCHandle.Alloc(strBuffer, GCHandleType.Pinned);
-                H5A.read(attributeId, aTypeMem, pinnedArray.AddrOfPinnedObject());
-                pinnedArray.Free();
-                H5T.close(aTypeMem);
-
-                string value = System.Text.Encoding.ASCII.GetString(strBuffer, 0, strBuffer.Length - 1);
-
-                var attribute = new Hdf5Attribute
-                {
-                    Id = attributeId.ToId(),
-                    Name = _title,
-                    Value = value
-                };
-
-                return attribute;
-            }
-            catch (Exception ex)
+            if (attributeId > 0)
             {
-                //TODO - Log
-                return null;
+                H5A.close(attributeId);
             }
-            finally
-            {
-                if (attributeId > 0)
-                {
-                    H5A.close(attributeId);
-                }
 
-                if (typeId > 0)
-                {
-                    H5T.close(typeId);
-                }
+            if (typeId > 0)
+            {
+                H5T.close(typeId);
             }
+
+            return attribute;
         }
 
         /// <summary>
-        /// 
+        /// Creates the attribute then adds to the supplied attribute list.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_objectId"></param>
@@ -168,16 +182,17 @@ namespace sharpHDF.Library.Helpers
             Hdf5Identifier attributeId;
             Hdf5Identifier typeId;
             Hdf5Attribute attribute = null;
-            Hdf5DataType dataTypeObject = null;
 
-            var datatype = TypeHelper.GetDataTypesEnum<T>();
+            Type type = _value.GetType();
+            var datatype = TypeHelper.GetDataTypesEnum(type);
             
             if (datatype != Hdf5DataTypes.String)
             {
                 var tempType = TypeHelper.GetNativeType(datatype);
 
                 typeId = H5T.copy(tempType.Value).ToId();
-                dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
+                var dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
+
                 var status = H5T.set_order(typeId.Value, H5T.order_t.LE);
 
                 dataspaceId = H5S.create_simple(1, sizes, null).ToId();
@@ -197,27 +212,29 @@ namespace sharpHDF.Library.Helpers
                 typeId = H5T.copy(H5T.C_S1).ToId();
                 int length = tempValue.Length + 1;
                 var result = H5T.set_size(typeId.Value, new IntPtr(length));
-                
-                dataTypeObject = TypeHelper.GetDataTypeByType(typeId);
 
                 attributeId = H5A.create(_objectId.Value, _title, typeId.Value, dataspaceId.Value).ToId();
 
                 IntPtr valueArray = Marshal.StringToHGlobalAnsi(tempValue);
+
                 result = H5A.write(attributeId.Value, typeId.Value, valueArray);
+
                 Marshal.FreeHGlobal(valueArray);
             }
-
-            attribute = new Hdf5Attribute
-            {
-                Value = _value,
-                Name = _title,
-                Id = attributeId
-            };
-
 
             H5S.close(dataspaceId.Value);
             H5T.close(typeId.Value);
             H5A.close(attributeId.Value);
+
+            if (attributeId.Value > 0)
+            {
+                attribute = new Hdf5Attribute
+                {
+                    Value = _value,
+                    Name = _title,
+                    Id = attributeId
+                };
+            }
 
             return attribute;
         }
@@ -225,23 +242,36 @@ namespace sharpHDF.Library.Helpers
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="_objectId"></param>
-        /// <param name="_title"></param>
-        /// <param name="_newValue"></param>
-        /// <returns></returns>
-        public static void UpdateAttribute<T>(Hdf5Identifier _objectId, string _title, T _newValue)
+        /// <param name="_attribute"></param>
+        public static void UpdateAttribute(Hdf5Identifier _objectId, Hdf5Attribute _attribute)
         {
-            Hdf5Identifier attributeId = H5A.open(_objectId.Value, _title).ToId();
+            Hdf5Identifier attributeId = H5A.open(_objectId.Value, _attribute.Name).ToId();
 
             if (attributeId.Value > 0)
             {
-                Hdf5DataType type = TypeHelper.GetDataType(attributeId);
-                Hdf5DataTypes enumType = TypeHelper.GetDataTypesEnum<T>();
+                Hdf5DataType type = TypeHelper.GetDataTypeFromAttribute(attributeId);
+                Hdf5DataTypes enumType = TypeHelper.GetDataTypesEnum(_attribute.Value.GetType());
 
                 if (type.Type == enumType)
                 {
-                    WriteValue(type, attributeId, _newValue);    
+                    if (enumType == Hdf5DataTypes.String)
+                    {
+                        H5A.close(attributeId.Value);
+                        DeleteAttribute(_objectId, _attribute.Name);
+                        Hdf5Attribute attribute = CreateAttribute(_objectId, _attribute.Name, _attribute.Value);
+
+                        if (attribute != null)
+                        {
+                            _attribute.Id = attribute.Id;
+                            _attribute.Name = attribute.Name;
+                            _attribute.Value = attribute.Value;
+                        }
+                    }
+                    else
+                    {
+                        WriteObjectValue(type, attributeId, _attribute.Value);
+                    }                    
                 }
                 else
                 {
@@ -250,6 +280,12 @@ namespace sharpHDF.Library.Helpers
             }
         }
 
+        /// <summary>
+        /// Routes to generic read method based on correct data type
+        /// </summary>
+        /// <param name="_dataType"></param>
+        /// <param name="_attributeId"></param>
+        /// <returns></returns>
         public static Object ReadValue(
             Hdf5DataType _dataType,
             Hdf5Identifier _attributeId)
@@ -307,6 +343,76 @@ namespace sharpHDF.Library.Helpers
             throw new Hdf5UnknownDataType();
         }
 
+        public static void WriteObjectValue(
+            Hdf5DataType _dataType,
+            Hdf5Identifier _attributeId,
+            object _value)
+        {
+            if (_dataType.Type == Hdf5DataTypes.Int8)
+            {
+                WriteValue(_dataType, _attributeId, (sbyte)_value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.Int16)
+            {
+                WriteValue(_dataType, _attributeId, (Int16) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.Int32)
+            {
+                WriteValue(_dataType, _attributeId, (Int32)_value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.Int64)
+            {
+                WriteValue(_dataType, _attributeId, (Int64) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.UInt8)
+            {
+                WriteValue(_dataType, _attributeId, (byte) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.UInt16)
+            {
+                WriteValue(_dataType, _attributeId, (UInt16) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.UInt32)
+            {
+                WriteValue(_dataType, _attributeId, (UInt32) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.UInt64)
+            {
+                WriteValue(_dataType, _attributeId, (UInt64) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.Single)
+            {
+                WriteValue(_dataType, _attributeId, (Single) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.Double)
+            {
+                WriteValue(_dataType, _attributeId, (Double) _value);
+            }
+
+            if (_dataType.Type == Hdf5DataTypes.String)
+            {
+                
+            }
+
+            throw new Hdf5UnknownDataType();
+        }
+
+        /// <summary>
+        /// Writes the specified value to the file
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_dataType"></param>
+        /// <param name="_attributeId"></param>
+        /// <param name="_value"></param>
         private static void WriteValue<T>(
             Hdf5DataType _dataType,
             Hdf5Identifier _attributeId,
@@ -326,6 +432,13 @@ namespace sharpHDF.Library.Helpers
             H5T.close(dataType.Value);
         }
 
+        /// <summary>
+        /// Reads from the hdf file
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_dataType"></param>
+        /// <param name="_attributeId"></param>
+        /// <returns></returns>
         private static T ReadValue<T>(
             Hdf5DataType _dataType,
             Hdf5Identifier _attributeId)

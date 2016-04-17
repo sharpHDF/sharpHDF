@@ -50,6 +50,7 @@
     <Compile Include="Enums\Hdf5DataTypes.cs" />
     <Compile Include="Exceptions\Hdf5ArrayDimensionsMismatchException.cs" />
     <Compile Include="Exceptions\Hdf5ArraySizeMismatchException.cs" />
+    <Compile Include="Exceptions\Hdf5AttributeAlreadyExistException.cs" />
     <Compile Include="Exceptions\Hdf5FileExistsException.cs" />
     <Compile Include="Exceptions\Hdf5FileNotFoundException.cs" />
     <Compile Include="Exceptions\Hdf5TypeMismatchException.cs" />
