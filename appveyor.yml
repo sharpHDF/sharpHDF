@@ -1,8 +1,4 @@
-version: 0.8.{build}
-
-environment:
-  nugetKey:
-    secure: CRRgxp0YT0nwHJ2juNykbOeJVs88vQYh3tmA0gITjcfFOa3PMJ4W0DC8vTjLXHeQ
+version: 0.8.{build}   
     
 before_build:
   - nuget restore src/sharpHDF/sharpHDF.sln
@@ -39,7 +35,8 @@ after_test:
  
 deploy:
   provider: NuGet
-  api_key:  nugetKey
+  api_key:  
+    secure: CRRgxp0YT0nwHJ2juNykbOeJVs88vQYh3tmA0gITjcfFOa3PMJ4W0DC8vTjLXHeQ
   skip_symbols: true
   artifact: /.*\.nupkg/  
   on:
