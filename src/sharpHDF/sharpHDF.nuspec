@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>sharpHDF</id>
+    <version>$version$</version>
+    <title>sharpHDF</title>
+    <authors>Brian Nelson</authors>
+    <owners>Brian Nelson</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Object Oriented HDF5 Wrapper</description>
+    <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="HDF.PInvoke" />
+    </dependencies>
+  </metadata>
+</package>
