@@ -2,6 +2,9 @@
 
 [![codecov.io](https://codecov.io/github/sharpHDF/sharpHDF/coverage.svg?branch=master)](https://codecov.io/github/sharpSDF/sharpHDF5?branch=master)
 
+[https://ci.appveyor.com/api/projects/status/github/sharpHDF/sharpHDF]
+
+
 This library provides a .Net based object oriented approach to accessing HDF5 files.  The library uses the [HDF.PInvoke] (https://github.com/HDFGroup/HDF.PInvoke) library that has been provided by The HDF Group to access the files.  [The HDF Group](https://www.hdfgroup.org/) controls the the specification and licensing to the underlying technology.  HDF stands for Hierarchical Data Format.  For more information on the underlying technology please refer to their site.
 
 Currently the **sharpHDF** library supports a subset of version 1.8 of the HDF5 Specification.
