@@ -4,7 +4,7 @@
 
 This library provides a .Net based object oriented approach to accessing HDF5 files.  The library uses the [HDF.PInvoke] (https://github.com/HDFGroup/HDF.PInvoke) library that has been provided by The HDF Group to access the files.  [The HDF Group](https://www.hdfgroup.org/) controls the the specification and licensing to the underlying technology.  HDF stands for Hierarchical Data Format.  For more information on the underlying technology please refer to their site.
 
-Currently the **sharpHDF** library supports version 1.8 of the HDF5 Specification.
+Currently the **sharpHDF** library supports a subset of version 1.8 of the HDF5 Specification.
 
 The inital purpose of the library is to assist with an Amateur Radio Astronomy project I am working on.  The sharpHDF library may be of use to others as is or as an example of how to work with the HDF.PInvoke library.
 
