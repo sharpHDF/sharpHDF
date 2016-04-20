@@ -132,8 +132,9 @@ namespace sharpHDF.Library.Helpers
             if (id > 0)
             {
                 Hdf5Group group = new Hdf5Group(_fileId, id.ToId(), path.FullPath);
-
                 H5G.close(id);
+
+                FileHelper.FlushToFile(_fileId);
 
                 return group;
             }

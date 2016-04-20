@@ -233,6 +233,8 @@ namespace sharpHDF.Library.Helpers
 
             H5T.close(typeId.Value);
             H5O.close(datasetId.Value);
+
+            FileHelper.FlushToFile(_dataset.FileId);
         }
 
         public static void Write2DArray<T>(Hdf5Dataset _dataset, T[,] _array)
@@ -270,6 +272,8 @@ namespace sharpHDF.Library.Helpers
 
             H5T.close(typeId.Value);
             H5O.close(datasetId.Value);
+
+            FileHelper.FlushToFile(_dataset.FileId);
         }
 
         public static T[,] Read2DArray<T>(Hdf5Identifier _datasetIdentifer, Hdf5Dataset _dataset)
@@ -374,8 +378,12 @@ namespace sharpHDF.Library.Helpers
 
             H5T.close(typeId.Value);
 
+            FileHelper.FlushToFile(_fileId);
+
             return dataset;
         }
     }
 }
+
+
 

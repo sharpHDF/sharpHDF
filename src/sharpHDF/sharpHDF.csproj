@@ -60,6 +60,7 @@
     <Compile Include="Helpers\AttributeHelper.cs" />
     <Compile Include="Helpers\DatasetHelper.cs" />
     <Compile Include="Helpers\DataspaceHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\IdHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
