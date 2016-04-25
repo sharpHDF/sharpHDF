@@ -7,7 +7,7 @@ using sharpHDF.Library.Helpers;
 
 namespace sharpHDF.Library.Objects
 {
-    public class Hdf5Groups : ReadonlyList<Hdf5Group>
+    public class Hdf5Groups : ReadonlyNamedItemList<Hdf5Group>
     {
         internal AbstractHdf5Object ParentObject { get; private set; }
 

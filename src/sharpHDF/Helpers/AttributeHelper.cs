@@ -158,7 +158,7 @@ namespace sharpHDF.Library.Helpers
         /// <returns></returns>
         public static Hdf5Attribute CreateAttributeAddToList<T>(
             Hdf5Identifier _objectId,
-            ReadonlyList<Hdf5Attribute> _attributes,
+            ReadonlyNamedItemList<Hdf5Attribute> _attributes,
             string _title,
             T _value)
         {

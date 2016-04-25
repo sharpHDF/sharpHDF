@@ -15,7 +15,7 @@ namespace sharpHDF.Library.Objects
     /// <summary>
     /// Contains information around a HDF5 Dataset
     /// </summary>
-    public class Hdf5Dataset : AbstractHdf5Object, IHasAttributes
+    public class Hdf5Dataset : AbstractHdf5Object, IHasAttributes, IHasName
     {
         internal Hdf5Dataset(Hdf5Identifier _fileId, Hdf5Identifier _id, string _path)
         {

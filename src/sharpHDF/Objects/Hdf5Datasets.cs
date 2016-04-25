@@ -12,7 +12,7 @@ namespace sharpHDF.Library.Objects
     /// <summary>
     /// 
     /// </summary>
-    public class Hdf5Datasets : ReadonlyList<Hdf5Dataset>
+    public class Hdf5Datasets : ReadonlyNamedItemList<Hdf5Dataset>
     {
         internal AbstractHdf5Object ParentObject { get; private set; }
 

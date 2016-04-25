@@ -9,7 +9,7 @@ using sharpHDF.Library.Structs;
 
 namespace sharpHDF.Library.Objects
 {
-    public class Hdf5Group : AbstractHdf5Object, IHasGroups, IHasAttributes, IHasDatasets
+    public class Hdf5Group : AbstractHdf5Object, IHasGroups, IHasAttributes, IHasDatasets, IHasName
     {
         internal Hdf5Group(
             Hdf5Identifier _fileId, 

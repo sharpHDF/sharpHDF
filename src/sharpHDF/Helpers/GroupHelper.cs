@@ -109,7 +109,7 @@ namespace sharpHDF.Library.Helpers
         }
 
         public static Hdf5Group CreateGroupAddToList(
-            ReadonlyList<Hdf5Group> _groups, 
+            ReadonlyNamedItemList<Hdf5Group> _groups, 
             Hdf5Identifier _fileId,
             Hdf5Path _parentPath, 
             string _name)

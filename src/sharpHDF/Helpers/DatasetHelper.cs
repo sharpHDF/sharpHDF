@@ -301,7 +301,7 @@ namespace sharpHDF.Library.Helpers
         }
 
         public static Hdf5Dataset CreateDatasetAddToDatasets(
-            ReadonlyList<Hdf5Dataset> _datasets,
+            ReadonlyNamedItemList<Hdf5Dataset> _datasets,
             Hdf5Identifier _fileId,
             Hdf5Path _parentPath,
             string _name,

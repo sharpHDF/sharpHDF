@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\IHasAttributes.cs" />
     <Compile Include="Interfaces\IHasDatasets.cs" />
     <Compile Include="Interfaces\IHasGroups.cs" />
+    <Compile Include="Interfaces\IHasName.cs" />
     <Compile Include="Objects\AbstractHdf5Object.cs" />
     <Compile Include="Objects\Hdf5Attribute.cs" />
     <Compile Include="Objects\Hdf5Attributes.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Objects\Hdf5File.cs" />
     <Compile Include="Objects\Hdf5Group.cs" />
     <Compile Include="Objects\Hdf5Path.cs" />
+    <Compile Include="Objects\ReadonlyNamedItemList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\Hdf5Identifier.cs" />
   </ItemGroup>

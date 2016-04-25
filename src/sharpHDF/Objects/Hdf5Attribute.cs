@@ -3,12 +3,15 @@
  * See license in repo for more information                                  *
  * https://github.com/sharpHDF/sharpHDF                                      *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+using sharpHDF.Library.Interfaces;
+
 namespace sharpHDF.Library.Objects
 {
     /// <summary>
     /// Contains HDF5 Attribures
     /// </summary>
-    public class Hdf5Attribute : AbstractHdf5Object
+    public class Hdf5Attribute : AbstractHdf5Object, IHasName
     {
         /// <summary>
         /// Name of the Attribute
