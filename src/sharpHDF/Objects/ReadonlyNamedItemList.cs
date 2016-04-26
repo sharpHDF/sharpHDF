@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Copyright by Brian Nelson 2016.                                           *
+ * See license in repo for more information                                  *
+ * https://github.com/sharpHDF/sharpHDF                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+using System.Collections;
 using System.Collections.Generic;
 using sharpHDF.Library.Interfaces;
 
@@ -6,8 +11,8 @@ namespace sharpHDF.Library.Objects
 {
     public class ReadonlyNamedItemList<T> : IEnumerable<T> where T:IHasName
     {
-        private List<T> m_InternalList;
-        private Dictionary<string, T> m_Dictionary; 
+        private readonly List<T> m_InternalList;
+        private readonly Dictionary<string, T> m_Dictionary; 
 
         public ReadonlyNamedItemList()
         {
@@ -61,7 +66,12 @@ namespace sharpHDF.Library.Objects
         {
             get
             {
-                return m_Dictionary[_name];
+                if (m_Dictionary.ContainsKey(_name))
+                {
+                    return m_Dictionary[_name];
+                }
+
+                return default(T);
             }
         }
 
