@@ -38,11 +38,13 @@
       <HintPath>packages\HDF.PInvoke.1.8.20.0\lib\HDF.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Microsoft.CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -94,9 +96,10 @@
   <PropertyGroup>
     <PostBuildEvent>
 if not exist "$(TargetDir)bin32" md "$(TargetDir)bin32"
-xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.11\lib\native\bin32\*.*" "$(TargetDir)bin32"
+xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.20.0\build\bin32\*.*" "$(TargetDir)bin32"
+
 if not exist "$(TargetDir)bin64" md "$(TargetDir)bin64"
-xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.11\lib\native\bin64\*.*" "$(TargetDir)bin64"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.20.0\build\bin64\*.*" "$(TargetDir)bin64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
